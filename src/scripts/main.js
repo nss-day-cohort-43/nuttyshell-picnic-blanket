@@ -16,7 +16,7 @@ LoginForm();
 
 
 // Test Zone
-import {publicMessagesStarter} from './PublicMessages/MessageBox.js'
+import {publicMessagesStarter} from './publicMessages/MessageBox.js'
 
 publicMessagesStarter()
 

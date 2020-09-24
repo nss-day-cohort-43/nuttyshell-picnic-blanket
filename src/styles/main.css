@@ -32,6 +32,10 @@ header {
     /* make this a gradient or a picture? */
 }
 
+.public-messages-box  {
+    height: 20em;
+}
+
 /* ------------------- Authentication forms (login/register) -------------------- */
 
 .auth { 
