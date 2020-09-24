@@ -2,8 +2,27 @@ import { LoginForm } from "./auth/LoginForm.js"
 import { RegisterForm } from "./auth/RegisterForm.js"
 import { Nutshell } from "./Nutshell.js"
 
+//listen for user authentication either from the LoginForm or RegistrationForm
+const eventHub = document.querySelector('.container')
 
-LoginForm();
+eventHub.addEventListener("userAuthenticated", event => {
+    //run nuthsell if the user has been authenticated from either form
+    Nutshell()
+})
+
+
+//check if there is an active user and run Nutshell() if there is
+//else run render the LoginForm
+//this will allow the UI to render on a page refresh
+const activeUser = sessionStorage.getItem("activeUser")
+
+if(activeUser){
+    Nutshell();
+}
+else{
+    LoginForm();
+}
+
 
 /*
     1. Check if the user is authenticated by looking in session storage for `activeUser`
