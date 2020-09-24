@@ -2,7 +2,7 @@ import {getTasks, useTasks, saveTask, deleteTask, editTask} from "./TaskProvider
 import {Task} from "./Task.js"
 
 //defines main eventHub
-const eventHub = document.querySelector(".container")
+const eventHub = document.querySelector(".dashboard")
 //defines active user to get relevant data from API
 const userId = sessionStorage.getItem("activeUser")
 
@@ -43,9 +43,9 @@ const renderTaskForm = () => {
     const taskTarget = document.querySelector(".task-form")
     //defines inner HTML for the form
     taskTarget.innerHTML = `<div>New Task</div>
-        <textarea id="task-text" placeholder="Enter task info...</textarea>
-        <label for="completionDate">Expected Completion Date:</label>
-        <input type="date" id="expectedCompletionDate" name="completionDate">
+        <textarea id="task-text" placeholder="Enter task info..."></textarea><br>
+        <label for="completionDate">Expected Completion Date:</label><br>
+        <input type="date" id="completionDate" name="completionDate"><br>
         <button id="saveTask">Save New Task</button>
     `
 }
@@ -56,19 +56,18 @@ eventHub.addEventListener("click", e => {
     if(e.target.id === "saveTask"){
         //defines content and date that will be saved
         const taskContent = document.querySelector("#task-text")
-        const taskDate = document.querySelector("#expectedCompletionDate")
+        const taskDate = document.querySelector("#completionDate")
         //verifies that neither of the fields are empty
         if(taskContent.value !== "0" && taskDate.value !== "0"){
             //defines object that will be saved into api
             const newTask = {
-                userId: userId,
+                userId: parseInt(sessionStorage.getItem("activeUser")),
                 task: taskContent.value,
                 expectedCompletionDate: taskDate.value,
                 status: false
             }
             //runs saveTask and re-renders the task list
             saveTask(newTask)
-            .then(getTasks)
             .then(()=>{
                 const tasks = useTasks()
                 render(tasks)
@@ -93,23 +92,40 @@ eventHub.addEventListener("click", e => {
     //edit will be added here
 })
 
+//listens for change event in task checkboxes
 eventHub.addEventListener("change", e=> {
     if(e.target.id.startsWith("check--")){
+        //splits and defines task id
         const [prefix, id] = e.target.id.split("--")
+        //defines the checkbox
         const _selector = document.querySelector(`input[id="check--${id}"]`)
+        //checks if relevant checkbox is checked
         if(_selector.checked === true){
+            //defines edited task to overwrite old
+            //changes completion status to true
             const editedTask = {
-                userId: userId,
-                task: taskContent.value,
-                expectedCompletionDate: taskDate.value,
+                id: id,
+                userId: parseInt(sessionStorage.getItem("activeUser")),
+                task: document.querySelector(`#check--${id}`).value,
+                expectedCompletionDate: document.querySelector(`.date-${id}`).textContent,
                 status: true
             }
-
-
-            editTask(taskObj, taskId)
+            //places edited task info into api
+            editTask(editedTask, parseInt(id))
         }
+        //if the user unchecks the completion box, the completion status
+        //will be updated to false
         else{
-
+            //defines edited task to overwrite old
+            const editedTask = {
+                id: id,
+                userId: parseInt(sessionStorage.getItem("activeUser")),
+                task: document.querySelector(`#check--${id}`).value,
+                expectedCompletionDate: document.querySelector(`.date-${id}`).textContent,
+                status: false
+            }
+            //places edited task info in api
+            editTask(editedTask, parseInt(id))
         }
     }
 })

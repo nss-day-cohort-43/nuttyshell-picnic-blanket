@@ -1,7 +1,8 @@
-let tasks
-const userId = sessionStorage.getItem("activeUser")
+let tasks = []
+
 export const getTasks = () => {
-    return fetch(`http://localhost:8088/database/tasks?userId=${userId}`)
+    const userId = sessionStorage.getItem("activeUser")
+    return fetch(`http://localhost:8088/tasks?userId=${userId}`)
     .then(response => response.json())
     .then(
         parsedTasks => {
