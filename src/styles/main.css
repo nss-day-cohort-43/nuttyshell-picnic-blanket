@@ -1,0 +1,120 @@
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    margin: 0;
+    height: 100px;
+    background: gray;
+    width: 100%;
+    padding: 10px;
+}
+
+.title {
+    margin: 0;
+}
+
+.hidden { 
+    visibility: hidden;
+}
+
+
+/* ----------------- Main body content ----------------- */
+
+
+.container {
+    background-color: white;
+    /* make this a gradient or a picture? */
+}
+
+/* ------------------- Authentication forms (login/register) -------------------- */
+
+.auth { 
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5em;
+    margin-bottom: 5em;
+    width: 15em;
+    height: 15em;
+    justify-content: center;
+
+}
+
+.auth--login {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(230, 230, 230);
+    padding: 10px 20px;
+    width: 100%;
+
+}
+
+.auth--login > p {
+    margin: 20px auto;
+
+}
+
+.login {
+    display: flex;
+    flex-direction: column;
+}
+
+#login--btn {
+    margin: auto 5px;
+    font-size: 20px;
+    background-color: rgb(167, 167, 167);
+}
+
+#create-new-account-btn {
+    color: white;
+    border-color: rgb(80, 177, 96);
+    margin: auto 5px;
+    font-size: 20px;
+    background-color: rgb(80, 177, 96);
+}
+
+.input-box {
+    margin: 8px 5px;
+}
+
+
+
+#register--btn {
+    margin: auto 5px;
+    font-size: 20px;
+    background-color: rgb(80, 177, 96);
+}
+
+.register {
+    display: flex;
+    flex-direction: column;
+}
+
+.auth--register {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(230, 230, 230);
+    padding: 10px 20px;
+    width: 100%;
+}
+
+
+ /* --------------------- Actual user content ------------------ */
+.dashboard { 
+    background-color: dimgray;
+    width: 50%;
+    height: 50%;
+}
+
+/* ------------------ Footer --------------------- */
+
+footer {
+    margin: 0;
+    height: 100px;
+    background: gray;
+    width: 100%;
+    padding: 10px;
+}

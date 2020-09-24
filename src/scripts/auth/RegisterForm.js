@@ -1,17 +1,23 @@
-const contentTarget = document.querySelector(".auth--register")
+const contentTarget = document.querySelector(".auth")
 const eventHub = document.querySelector(".container")
 
 eventHub.addEventListener("userAuthenticated", e => {
     contentTarget.innerHTML = ""
 })
 
+eventHub.addEventListener("registerNewAccount", e => {
+    //debugger;
+    RegisterForm();
+})
+
 
 eventHub.addEventListener("click", e => {
-    if (e.target.id === "register--button") {
+    if (e.target.id === "register--btn") {
         const username = document.querySelector("#register--username").value
         const email = document.querySelector("#register--email").value
+        const zipcode = document.querySelector("#register--zipcode").value
 
-        if (username !== "" && email !== "") {
+        if (username !== "" && email !== "" && zipcode !== "") {
             // Does the user exist?
             fetch(`http://localhost:8088/users?username=${username}`)
             .then(response => response.json())
@@ -24,7 +30,8 @@ eventHub.addEventListener("click", e => {
                         },
                         body: JSON.stringify({
                             "username": username,
-                            "email": email
+                            "email": email,
+                            "zipcode": zipcode
                         })
                     })
                         .then(response => response.json())
@@ -45,13 +52,15 @@ eventHub.addEventListener("click", e => {
 
 
 const render = () => {
-    contentTarget.innerHTML += `
+    contentTarget.innerHTML = `
+    <section class="auth--register">
         <section class="register">
-            <input id="register--username" type="text" placeholder="Enter your username">
-            <input id="register--email" type="text" placeholder="Enter your email address">
-
-            <button id="register--button">Register</button>
+            <input type="text" id="register--username" class="input-box" placeholder="Enter your username">
+            <input type="text" id="register--email" class="input-box" placeholder="Enter your email address">
+            <input type="text" id="register--zipcode" class="input-box" placeholder="Enter your Zip Code">
+            <button type="button" id="register--btn">Register</button>
         </section>
+    </section>
     `
 }
 
