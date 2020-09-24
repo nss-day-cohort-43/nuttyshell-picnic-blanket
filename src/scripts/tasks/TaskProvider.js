@@ -43,8 +43,4 @@ export const editTask = (taskObj, taskId) => {
     },
     body: JSON.stringify(taskObj)
   })
-    // .then(() => {
-    //   loadUsersBricks(getUser().id)
-    // })
-    // .then(dispatchUserBricksChanged)
 }
