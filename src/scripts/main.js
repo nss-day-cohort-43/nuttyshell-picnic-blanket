@@ -33,9 +33,3 @@ else{
 */
 
 
-
-// Test Zone
-import {publicMessagesStarter} from './publicMessages/MessageBox.js'
-
-publicMessagesStarter()
-

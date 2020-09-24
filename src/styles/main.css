@@ -32,8 +32,23 @@ header {
     /* make this a gradient or a picture? */
 }
 
+
+/* ------------- Public Message Content -------------- */
+
 .public-messages-box  {
-    height: 20em;
+
+    padding: 1em;
+}
+
+.publicMessagesTitle {
+    text-align: center;
+    
+}
+
+.composePublicMessage{
+    display: flex;
+    flex-direction: row;
+    justify-content: baseline;
 }
 
 /* ------------------- Authentication forms (login/register) -------------------- */

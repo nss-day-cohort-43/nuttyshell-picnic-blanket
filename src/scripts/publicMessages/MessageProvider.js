@@ -1,3 +1,5 @@
+import {publicMessagesStarter} from './MessageBox.js'
+
 //Store Fetched Messages
 let publicMessages = []
 
@@ -13,4 +15,18 @@ export const getPublicMessages = () => {
         .then(parsedNotes => {
             publicMessages = parsedNotes
         })
+}
+
+
+export const savPublicMessage = message => {
+    return fetch("http://localhost:8088/messages", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(message)
+    })
+    .then(() => {
+        publicMessagesStarter()
+    })
 }

@@ -1,8 +1,29 @@
-import {getPublicMessages, usePublicMessages} from './MessageProvider.js'
+import {getPublicMessages, usePublicMessages, savPublicMessage} from './MessageProvider.js'
 import {messageWriter} from './Message.js'
 
 const eventHub = document.querySelector(".container")
 
+
+eventHub.addEventListener("click", event => {
+    const isClicked = event.target.classList.value
+    if (isClicked === "postPublicMessageBtn") {
+        const newMessage = document.querySelector("#newPublicMessage").value
+        const userId = sessionStorage.getItem("activeUser")
+        console.log(userId)
+        const message = {
+            private: false,
+            userId: parseInt(userId),
+            userReceive: null,
+            message: newMessage,
+            dateSent: Date(),
+            read: true
+        }
+        savPublicMessage(message)
+        
+
+
+    }
+})
 
 //Create the section where public messages will be rendered
 export const publicMessagesStarter = () => {
@@ -11,9 +32,12 @@ export const publicMessagesStarter = () => {
     //Inject this section into the above destination
     contentTarget.innerHTML = `
         <section class="public-messages-box">
+            <h2 class="publicMessagesTitle"> Public Messages</h2>
             <div class="rendered-public-messages"></div>
-            <input type="text" id="newPublicMessage">
-            <button class="postPublicMessageBtn">Send</button>
+            <div class="composePublicMessage">
+                <input type="text" id="newPublicMessage">
+                <button class="postPublicMessageBtn">Send</button>
+            </div>
         </section>
         `
     //Begin filling that section with individual messages
