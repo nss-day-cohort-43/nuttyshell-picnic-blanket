@@ -4,6 +4,12 @@ body {
     padding: 0;
 }
 
+.hidden { 
+    visibility: hidden;
+}
+
+
+/* ---------------- Header ------------------- */
 header {
     margin: 0;
     height: 100px;
@@ -16,9 +22,6 @@ header {
     margin: 0;
 }
 
-.hidden { 
-    visibility: hidden;
-}
 
 
 /* ----------------- Main body content ----------------- */
@@ -43,6 +46,7 @@ header {
 
 }
 
+/* -------------- Login form -------------  */
 .auth--login {
     display: flex;
     flex-direction: column;
@@ -76,11 +80,20 @@ header {
     background-color: rgb(80, 177, 96);
 }
 
+
+/* ---- input fields ---- */
 .input-box {
     margin: 8px 5px;
 }
 
-
+/* --------------- Register form -------------- */
+.auth--register {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(230, 230, 230);
+    padding: 10px 20px;
+    width: 100%;
+}
 
 #register--btn {
     margin: auto 5px;
@@ -91,14 +104,6 @@ header {
 .register {
     display: flex;
     flex-direction: column;
-}
-
-.auth--register {
-    display: flex;
-    flex-direction: column;
-    background-color: rgb(230, 230, 230);
-    padding: 10px 20px;
-    width: 100%;
 }
 
 
