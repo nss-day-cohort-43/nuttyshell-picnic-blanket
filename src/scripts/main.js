@@ -12,7 +12,7 @@ eventHub.addEventListener("userAuthenticated", event => {
 
 
 //check if there is an active user and run Nutshell() if there is
-//else run render the LoginForm
+//else render the LoginForm
 //this will allow the UI to render on a page refresh
 const activeUser = sessionStorage.getItem("activeUser")
 
