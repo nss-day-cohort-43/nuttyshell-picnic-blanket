@@ -1,3 +1,6 @@
+//import render for all components here
+//like renderTasks, renderArticles, renderEvents, etc
+
 export const Nutshell = () => {
-    // Render all your UI components here
+    
 }
