@@ -22,13 +22,28 @@ export const saveTask = taskObj => {
         },
         body:JSON.stringify(taskObj)
     })
-    .then((result) => {})
+    .then(getTasks)
 }
 
 export const deleteTask = taskId => {
     return fetch(`http://localhost:8088/tasks/${taskId}`, {
         method: "DELETE",
-        
     })
     .then(getTasks)
+}
+
+//a fetch function will be added for editing tasks
+
+export const editTask = (taskObj, taskId) => {
+    return fetch(`http://localhost:8088/tasks/${taskId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(taskObj)
+  })
+    // .then(() => {
+    //   loadUsersBricks(getUser().id)
+    // })
+    // .then(dispatchUserBricksChanged)
 }
