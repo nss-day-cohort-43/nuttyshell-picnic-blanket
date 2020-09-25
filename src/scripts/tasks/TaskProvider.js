@@ -43,4 +43,5 @@ export const editTask = (taskObj, taskId) => {
     },
     body: JSON.stringify(taskObj)
   })
+  .then(getTasks)
 }
