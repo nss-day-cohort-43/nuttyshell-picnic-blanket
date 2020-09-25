@@ -1,4 +1,4 @@
-import {Nutshell} from '../Nutshell.js'
+import {publicMessagesStarter} from './MessageBox.js'
 
 //Store Fetched Messages
 let publicMessages = []
@@ -28,7 +28,7 @@ export const savePublicMessage = message => {
     })
     //Wait for the database to update and then render everything again with newest data
     .then(() => {
-        Nutshell()
+        publicMessagesStarter()
     })
 }
 
@@ -39,6 +39,6 @@ export const deletePublicMessage = messageID => {
     })
     //Wait for the database to update and then render everything again with newest data
     .then(() => {
-        Nutshell()})
+        publicMessagesStarter()})
 
     }

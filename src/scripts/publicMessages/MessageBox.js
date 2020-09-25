@@ -26,7 +26,8 @@ eventHub.addEventListener("click", event => {
 //Create the section where public messages will be rendered
 export const publicMessagesStarter = () => {
     //Set the destination where this section will be rendered
-    const contentTarget = document.querySelector(".dashboard")
+    document.querySelector(".dashboard").innerHTML += `<div class="public-messages"></div>`
+    const contentTarget = document.querySelector(".public-messages")
     //Inject this section into the above destination
     contentTarget.innerHTML = `
         <section class="public-messages-box">
