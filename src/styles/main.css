@@ -37,8 +37,6 @@ header {
 
 .public-messages-box  {
     border: 1px solid;
-    
- 
 }
 
 .rendered-public-messages {
@@ -54,7 +52,6 @@ header {
 }
 
 .public-message-delete {
-    
     font-size: 10px;
     cursor: pointer;
 }
@@ -65,10 +62,6 @@ header {
     cursor: pointer;
 }
 
-.editPublicMessage{
-
-}
-
 #edit-message-input {
     margin-left: 0.5em;
     width: 50%;
@@ -76,19 +69,12 @@ header {
 
 .publicMessagesTitle {
     text-align: center;
-    
-}
-
-.composePublicMessage-edit {
-    
 }
 
 .composePublicMessage{
     display: flex;
     flex-direction: row;
 }
-
-
 
 /* ------------------- Authentication forms (login/register) -------------------- */
 
