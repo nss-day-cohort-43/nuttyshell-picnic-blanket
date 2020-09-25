@@ -38,6 +38,13 @@ header {
 .public-messages-box  {
     border: 1px solid;
     padding: 1em;
+    max-height: 15em;
+    overflow-y:auto;
+}
+
+.rendered-public-messages {
+    max-height: 15em;
+    overflow-y:auto;
 }
 
 .public-message {
