@@ -14,16 +14,19 @@ export const getArticles = () => {
 
 export const getfriendsArticles = () => {
     const userId = sessionStorage.getItem("activeUser")
-    let relationships = []
+    let friends = []
     let relationshipsAdded = []
-    fetch(`http://localhost:8088/friends?_expand=user&userId=${userId}`)
+    fetch(`http://localhost:8088/friends?userId=${userId}`)
     .then(response => response.json())
     .then(
         parsedRelationships => {
-            relationships = parsedRelationships
+            const friendsAdded = parsedRelationships.map(relationship => {
+                return relationship.userAdded
+            })
+            friends = friendsAdded
         }
     )
-    .then(fetch(`http://localhost:8088/friends?userAdded=${userId}`))
+    .then(fetch(`http://localhost:8088/friends?_expand=user&userAdded=${userId}`))
     .then(response => response.json())
     .then(
         parsedRelationships => {
