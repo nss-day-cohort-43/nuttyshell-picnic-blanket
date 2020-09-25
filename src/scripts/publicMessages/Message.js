@@ -17,5 +17,11 @@ export const othersMessageWriter = message => {
 
 // Return the HTML to be rendered for users individual messages
 export const myMessageWriter = message => {
-    return `<div class="public-message">${message.user.username}: ${message.message} <div class="public-message-delete" id="deletePublicMessage-${message.id}">❌</div></div>`
+    return `<div class="public-message">
+                ${message.user.username}: ${message.message}
+                <div class="public-message-delete" id="deletePublicMessage-${message.id}">
+                    ❌
+                </div>
+            </div>
+    `
 }

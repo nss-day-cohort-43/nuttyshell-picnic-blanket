@@ -41,7 +41,7 @@ header {
 }
 
 .public-message {
-    
+    margin-top: 0.25em;
 }
 
 .public-message-delete {
@@ -56,7 +56,6 @@ header {
 .composePublicMessage{
     display: flex;
     flex-direction: row;
-    justify-content: baseline;
 }
 
 /* ------------------- Authentication forms (login/register) -------------------- */
