@@ -10,7 +10,7 @@ const userId = sessionStorage.getItem("activeUser")
 export const renderArticlesInitial = () => {
     //adds articles container to main container
     eventHub.innerHTML += `<div class="articles">
-        <div class="article-form"></div>
+        <div class="article-add"></div>
         <div class="article-list"></div>
         <div class="friend-articles-list"></div>
     </div>`
@@ -20,7 +20,7 @@ export const renderArticlesInitial = () => {
     .then(()=> {
         const myArticles = useArticles()
         //renders form for adding new articles
-        renderArticleForm()
+        renderArticleAddButton()
         //renders articles list
         render(myArticles)
     })
@@ -49,6 +49,12 @@ const renderArticleForm = () => {
         <textarea id="article-synopsis" placeholder="Enter article synopsis..."></textarea><br>
         <button id="saveArticle">Save New Article</button>
     `
+}
+
+//renders a button that when clicked will display creating new task form
+const renderArticleAddButton = () => {
+    const taskTarget = document.querySelector(".article-add")
+    taskTarget.innerHTML +=`<button id="newArticle">Create New Article</button><div class="article-form"></div>`
 }
 
 //adds and eventListener to eventHub for specific events
@@ -90,6 +96,13 @@ eventHub.addEventListener("click", e => {
             const articles = useArticles()
             render(articles)
         })
+    } else if(e.target.id === "newArticle" && e.target.textContent === "Create New Article"){
+        renderArticleForm()
+        e.target.textContent = "Hide Article Form"
+    } else if(e.target.id === "newArticle" && e.target.textContent === "Hide Article Form"){
+        e.target.textContent = "Create New Article"
+        const contentHide = document.querySelector(".article-form")
+        contentHide.innerHTML = ""
     }
     //edit will be added here
 })
