@@ -18,13 +18,20 @@ eventHub.addEventListener("click", event => {
             // Send message ID to the editPrep function for the editing area
             editPrep(messageID)
         }
+    else {
+        // If user saves the updated message
+        if (isClicked === "editMessageSave"){
+            const [prefix, messageID] = event.target.id.split("-")
+            editBuilder(messageID)
+        }
         else {
-            // If user saves the updated message
-            if (isClicked === "editMessageSave"){
-                const [prefix, messageID] = event.target.id.split("-")
-                editBuilder(messageID)
+            if (isClicked === "editCancel") {
+                console.log("nevermind")
             }
         }
+    }
+       
+
     }
 })
 
@@ -64,6 +71,7 @@ const editPrep = (messageID) => {
         <div class="editPublicMessage">
             <input id="edit-message-input" type="text" value="${matchingMessage.message}">
             <button class="editMessageSave" id="editMessageSave-${messageID}">Save</button>
+            <button class="editCancel">Cancel</button>
         </div>
         `
 }
