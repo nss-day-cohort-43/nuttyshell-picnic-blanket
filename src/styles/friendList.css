@@ -1,0 +1,24 @@
+
+.myFriends {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    background-color: goldenrod;
+    padding: 10px;
+}
+
+#addFriend {
+    background-color: darkcyan;
+    padding: 5px;
+}
+
+#addNewFriend-btn {
+    flex-basis: 100%;
+    text-align: center;
+}
+
+.addFriend-form {
+    height: 100px;
+    flex-basis: 100%;
+    border: dotted red 2px;
+}
