@@ -36,6 +36,7 @@ export const publicMessagesStarter = () => {
             <div class="composePublicMessage">
                 <input type="text" id="newPublicMessage">
                 <button class="postPublicMessageBtn">Send</button>
+                <div class="composePublicMessage-edit"></div>
             </div>
         </section>
         `

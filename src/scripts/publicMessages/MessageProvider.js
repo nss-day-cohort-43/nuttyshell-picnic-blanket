@@ -31,8 +31,7 @@ export const savePublicMessage = message => {
         publicMessagesStarter()
     })
 }
-
-
+// Delete a previously created public message
 export const deletePublicMessage = messageID => {
     return fetch(`http://localhost:8088/messages/${messageID}`, {
         method: "DELETE"
@@ -41,4 +40,23 @@ export const deletePublicMessage = messageID => {
     .then(() => {
         publicMessagesStarter()})
 
+    }
+
+
+
+
+
+
+
+
+// RESUME HERE
+//Edit a previously created public message
+export const editPublicMessage = message => {
+    return fetch(`http://localhost:8088/messages/${message.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(message)
+      })
     }

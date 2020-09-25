@@ -48,9 +48,22 @@ header {
     float: right;
 }
 
+.public-message-edit {
+    float: right;
+}
+
+#edit-message-input {
+    margin-left: 5em;
+    width: 50%;
+}
+
 .publicMessagesTitle {
     text-align: center;
     
+}
+
+.composePublicMessage-edit {
+    width: 100%;
 }
 
 .composePublicMessage{
