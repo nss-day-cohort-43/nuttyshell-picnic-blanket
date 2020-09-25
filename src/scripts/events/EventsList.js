@@ -5,14 +5,21 @@ import { EventForm } from './EventForm.js'
 const dashboard = document.querySelector('.dashboard')
 
 //Actually render events to the dom
-const render = (events) => {
-    const contentElement = document.querySelector('.events-list')
-    contentElement.innerHTML = `
-        <h2>Events</h2>
-        ${events.map(event => {
-            return Event(event)
-        }).join("")}
-    `
+const render = () => {
+    //grab the userId, get the user's events, then render those events to the dom
+    const userId = sessionStorage.getItem('activeUser')
+    getEvents(userId)
+    .then(_ => {
+        const events = useEvents()
+        const contentElement = document.querySelector('.events-list')
+        //call Event() for each event object to create the html
+        contentElement.innerHTML = `
+            <h2>Events</h2>
+            ${events.map(event => {
+                return Event(event)
+            }).join("")}
+        `
+    })
 }
 
 //render initial list of events when Nutshell runs
@@ -28,20 +35,16 @@ export const EventList = () => {
             </div>
         </div>
     `
-
+    //render the eventForm
     EventForm();
-    //grab the userId from session storage, get their events, and render them to the dom
-    const userId = sessionStorage.getItem('activeUser')
-    getEvents(userId)
-    .then(_ => {
-        const events = useEvents()
-        render(events)
-    })
+    //render the event list
+    render()
 }
 
 //listen for when the event state has changed
 const eventHub = document.querySelector('.container')
 
 eventHub.addEventListener('eventStateChanged', event => {
-
+    //render the eventlist
+    render()
 })
