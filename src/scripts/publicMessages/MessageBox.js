@@ -1,15 +1,15 @@
-import {getPublicMessages, usePublicMessages, savPublicMessage} from './MessageProvider.js'
-import {messageWriter} from './Message.js'
+import {getPublicMessages, usePublicMessages, savePublicMessage} from './MessageProvider.js'
+import {myMessageWriter, othersMessageWriter} from './Message.js'
 
 const eventHub = document.querySelector(".container")
 
-
+//Listen for the send message button to be clicked
 eventHub.addEventListener("click", event => {
     const isClicked = event.target.classList.value
     if (isClicked === "postPublicMessageBtn") {
         const newMessage = document.querySelector("#newPublicMessage").value
         const userId = sessionStorage.getItem("activeUser")
-        console.log(userId)
+        //Create the obeject to be sent to the database
         const message = {
             private: false,
             userId: parseInt(userId),
@@ -18,10 +18,8 @@ eventHub.addEventListener("click", event => {
             dateSent: Date(),
             read: true
         }
-        savPublicMessage(message)
-        
-
-
+        //Send the object to the database
+        savePublicMessage(message)
     }
 })
 
@@ -53,9 +51,16 @@ const messagesRender = () => {
         const messages = usePublicMessages()
         //Set the destination for where individual messages should be rendered
         const contentTarget = document.querySelector(".rendered-public-messages")
-        //For each message in our array, write this HTML using the data from it
+        //For each message in our array, write HTML using the data from it
         const showMessages = messages.map((message) => {
-            contentTarget.innerHTML += messageWriter(message)
+            //If message was created by logged in user, use this code which allows deleting
+            if (message.userId === parseInt(sessionStorage.getItem("activeUser"))) {
+                contentTarget.innerHTML += myMessageWriter(message)
+            }
+            //If message was NOT created by logged in user, use this code
+            else {
+                contentTarget.innerHTML += othersMessageWriter(message)
+            }
         })
     })
 }

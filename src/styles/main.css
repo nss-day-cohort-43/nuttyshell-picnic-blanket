@@ -36,8 +36,16 @@ header {
 /* ------------- Public Message Content -------------- */
 
 .public-messages-box  {
-
+    border: 1px solid;
     padding: 1em;
+}
+
+.public-message {
+    
+}
+
+.public-message-delete {
+    float: right;
 }
 
 .publicMessagesTitle {
