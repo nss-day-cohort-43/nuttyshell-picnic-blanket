@@ -32,6 +32,32 @@ header {
     /* make this a gradient or a picture? */
 }
 
+
+/* ------------- Public Message Content -------------- */
+
+.public-messages-box  {
+    border: 1px solid;
+    padding: 1em;
+}
+
+.public-message {
+    margin-top: 0.25em;
+}
+
+.public-message-delete {
+    float: right;
+}
+
+.publicMessagesTitle {
+    text-align: center;
+    
+}
+
+.composePublicMessage{
+    display: flex;
+    flex-direction: row;
+}
+
 /* ------------------- Authentication forms (login/register) -------------------- */
 
 .auth { 
