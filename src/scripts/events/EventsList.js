@@ -1,5 +1,6 @@
 import { getEvents, useEvents } from './EventsProvider.js'
 import { Event } from './Event.js'
+import { EventForm } from './EventForm.js'
 
 const dashboard = document.querySelector('.dashboard')
 
@@ -20,6 +21,7 @@ export const EventList = () => {
     //set up html elements for rendering
     dashboard.innerHTML += `
         <div class="events-container">
+            <h3>New Event</h3>
             <form class="events-form">
             </form>
             <div class="events-list">
@@ -27,6 +29,7 @@ export const EventList = () => {
         </div>
     `
 
+    EventForm();
     //grab the userId from session storage, get their events, and render them to the dom
     const userId = sessionStorage.getItem('activeUser')
     getEvents(userId)
