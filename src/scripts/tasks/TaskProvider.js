@@ -33,8 +33,6 @@ export const deleteTask = taskId => {
     .then(getTasks)
 }
 
-//a fetch function will be added for editing tasks
-
 export const editTask = (taskObj, taskId) => {
     return fetch(`http://localhost:8088/tasks/${taskId}`, {
     method: "PUT",

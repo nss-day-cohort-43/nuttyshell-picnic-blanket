@@ -51,4 +51,12 @@ export const deleteArticle = articleId => {
     .then(getArticles)
 }
 
-//edit function to be added here
+export const editArticle = (articleObj, articleId) => {
+    return fetch(`http://localhost:8088/tasks/${articleId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(articleObj)
+  })
+}
