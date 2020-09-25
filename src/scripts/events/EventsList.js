@@ -38,3 +38,10 @@ export const EventList = () => {
         render(events)
     })
 }
+
+//listen for when the event state has changed
+const eventHub = document.querySelector('.container')
+
+eventHub.addEventListener('eventStateChanged', event => {
+
+})
