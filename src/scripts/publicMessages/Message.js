@@ -8,7 +8,7 @@ eventHub.addEventListener("click", event => {
     // If user pressed the delete icon
     if (isClicked === "public-message-delete") {
         const [prefix, messageID] = event.target.id.split("-")
-       deletePublicMessage(messageID)
+        deletePublicMessage(messageID)
     }
     // If user pressed the edit icon
     else {
@@ -18,20 +18,18 @@ eventHub.addEventListener("click", event => {
             // Send message ID to the editPrep function for the editing area
             editPrep(messageID)
         }
-    else {
-        // If user saves the updated message
-        if (isClicked === "editMessageSave"){
-            const [prefix, messageID] = event.target.id.split("-")
-            editBuilder(messageID)
-        }
         else {
-            if (isClicked === "editCancel") {
-                console.log("nevermind")
+            // If user saves the updated message
+            if (isClicked === "editMessageSave"){
+                const [prefix, messageID] = event.target.id.split("-")
+                editBuilder(messageID)
+            }
+            else {
+                if (isClicked === "editCancel") {
+                    console.log("nevermind")
+                }
             }
         }
-    }
-       
-
     }
 })
 
