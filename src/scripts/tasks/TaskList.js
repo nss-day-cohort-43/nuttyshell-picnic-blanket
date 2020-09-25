@@ -105,6 +105,9 @@ eventHub.addEventListener("click", e => {
         e.target.textContent = "Create New Task"
         const contentHide = document.querySelector(".task-form")
         contentHide.innerHTML = ""
+    } else if(e.target.id.startsWith("editTask--")){
+        const [prefix, id] = e.target.id.split("--")
+        
     }
     
 })
