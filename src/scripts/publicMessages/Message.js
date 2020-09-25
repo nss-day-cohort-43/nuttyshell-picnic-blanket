@@ -13,7 +13,9 @@ eventHub.addEventListener("click", event => {
     // If user pressed the edit icon
     else {
         if (isClicked ==="public-message-edit") {
+            // Pull the message ID from the element ID
             const [prefix, messageID] = event.target.id.split("-")
+            // Send message ID to the editPrep function for the editing area
             editPrep(messageID)
         }
         else {
@@ -52,10 +54,17 @@ const editPrep = (messageID) => {
     })
     // Declare where our HTML will be injected
     const contentTarget = document.querySelector(".composePublicMessage-edit")
+    // Ensure only one message is edited at a time by checking to see if a message is currently being edited
+    if (contentTarget) {
+        // If a message is being edited, clear that so the new one can be edited instead
+        contentTarget.innerHTML = ""
+    }
     // Create the HTML area
     contentTarget.innerHTML += `
-        <input id="edit-message-input" type="text" value="${matchingMessage.message}">
-        <button class="editMessageSave" id="editMessageSave-${messageID}">Save</button>
+        <div class="editPublicMessage">
+            Edit:<input id="edit-message-input" type="text" value="${matchingMessage.message}">
+            <button class="editMessageSave" id="editMessageSave-${messageID}">Save</button>
+        </div>
         `
 }
 

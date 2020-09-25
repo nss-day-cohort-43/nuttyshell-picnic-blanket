@@ -52,8 +52,12 @@ header {
     float: right;
 }
 
+.editPublicMessage{
+    margin-left: 7em;
+}
+
 #edit-message-input {
-    margin-left: 5em;
+    margin-left: 0.5em;
     width: 50%;
 }
 
