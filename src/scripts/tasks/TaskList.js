@@ -10,7 +10,8 @@ const userId = sessionStorage.getItem("activeUser")
 export const renderTasksInitial = () => {
     //adds tasks container to main container
     eventHub.innerHTML += `<div class="tasks">
-        <div class="task-form"></div>
+        <div class="task-add">
+        </div>
         <div class="task-list"></div>
     </div>`
     //gets user's tasks from api
@@ -18,8 +19,8 @@ export const renderTasksInitial = () => {
     .then(useTasks)
     .then(()=> {
         const myTasks = useTasks()
-        //renders form for adding new tasks
-        renderTaskForm()
+        //renders button for adding new tasks
+        renderTaskAddButton()
         //renders task list
         render(myTasks)
     })
@@ -49,6 +50,14 @@ const renderTaskForm = () => {
         <button id="saveTask">Save New Task</button>
     `
 }
+
+//renders a button that when clicked will display creating new task form
+const renderTaskAddButton = () => {
+    const taskTarget = document.querySelector(".task-add")
+    taskTarget.innerHTML +=`<button id="newTask">Create New Task</button><div class="task-form"></div>`
+}
+
+
 
 //adds and eventListener to eventHub for specific events
 eventHub.addEventListener("click", e => {
@@ -88,8 +97,16 @@ eventHub.addEventListener("click", e => {
             const tasks = useTasks()
             render(tasks)
         })
+    //when create new task button is clicked, it will render or hide task addition form
+    } else if(e.target.id === "newTask" && e.target.textContent === "Create New Task"){
+        renderTaskForm()
+        e.target.textContent = "Hide Task Form"
+    } else if(e.target.id === "newTask" && e.target.textContent === "Hide Task Form"){
+        e.target.textContent = "Create New Task"
+        const contentHide = document.querySelector(".task-form")
+        contentHide.innerHTML = ""
     }
-    //edit will be added here
+    
 })
 
 //listens for change event in task checkboxes
