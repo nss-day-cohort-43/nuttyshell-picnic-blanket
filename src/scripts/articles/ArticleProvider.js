@@ -1,5 +1,4 @@
 let articles = []
-let friendsArticles = []
 
 export const getArticles = () => {
     const userId = sessionStorage.getItem("activeUser")
@@ -12,38 +11,29 @@ export const getArticles = () => {
     )
 }
 
-export const getfriendsArticles = () => {
-    const userId = sessionStorage.getItem("activeUser")
-    let friends = []
-    let relationshipsAdded = []
-    fetch(`http://localhost:8088/friends?userId=${userId}`)
-    .then(response => response.json())
-    .then(
-        parsedRelationships => {
-            const friendsAdded = parsedRelationships.map(relationship => {
-                return relationship.userAdded
-            })
-            friends = friendsAdded
-        }
-    )
-    .then(fetch(`http://localhost:8088/friends?_expand=user&userAdded=${userId}`))
-    .then(response => response.json())
-    .then(
-        parsedRelationships => {
-            relationshipsAdded = parsedRelationships
-        }
-    )
-}
-
 export const useArticles = () => {
+    function compare(a, b) {
+        const bandA = a.dateAdded
+        const bandB = b.dateAdded
+      
+        let comparison = 0;
+        if (bandA > bandB) {
+          comparison = 1;
+        } else if (bandA < bandB) {
+          comparison = -1;
+        }
+        return comparison *-1;
+      }
+      
+    articles.sort(compare);
     return articles.slice()
 }
 
-export const useFriendArticles = () => {
-    return friendsArticles.slice()
-}
 
-export const saveArticles = articleObj => {
+
+
+
+export const saveArticle = articleObj => {
     return fetch("http://localhost:8088/articles", {
         method: "POST",
         headers: {
@@ -55,16 +45,14 @@ export const saveArticles = articleObj => {
 }
 
 export const deleteArticle = articleId => {
-    return fetch(`http://localhost:8088/tasks/${articleId}`, {
+    return fetch(`http://localhost:8088/articles/${articleId}`, {
         method: "DELETE",
     })
     .then(getArticles)
 }
 
-
-
 export const editArticle = (articleObj, articleId) => {
-    return fetch(`http://localhost:8088/article/${articleId}`, {
+    return fetch(`http://localhost:8088/articles/${articleId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json"

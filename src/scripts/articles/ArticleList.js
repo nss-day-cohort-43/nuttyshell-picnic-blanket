@@ -11,7 +11,7 @@ export const renderArticlesInitial = () => {
     //adds articles container to main container
     eventHub.innerHTML += `<div class="articles">
         <div class="article-form"></div>
-        <div class="articles-list"></div>
+        <div class="article-list"></div>
         <div class="friend-articles-list"></div>
     </div>`
     //gets user's articles from api
@@ -32,7 +32,7 @@ const render = (articles) => {
     const articleTarget = document.querySelector(".article-list")
     //iterates over all articles for the user and HTML list
     let articleListHTML = articles.map(article => {
-        return Articles(article)
+        return Article(article)
     }).join("<br>")
     //places task HTML list in content location
     articleTarget.innerHTML = articleListHTML
@@ -84,8 +84,8 @@ eventHub.addEventListener("click", e => {
         //defines which article to delete
         const [prefix, id] = e.target.id.split("--")
         //deletes article from API and re-renders article list
-        deleteArticle(id)
-        .then(getArticles)
+        const articleId = parseInt(id)
+        deleteArticle(articleId)
         .then(()=>{
             const articles = useArticles()
             render(articles)
