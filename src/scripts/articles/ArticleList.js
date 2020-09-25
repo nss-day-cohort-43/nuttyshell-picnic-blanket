@@ -1,4 +1,4 @@
-import {getArticles, useArticles, saveArticle, deleteArticle} from "./ArticleProvider.js"
+import {getArticles, useArticles, saveArticle, deleteArticle, editArticle} from "./ArticleProvider.js"
 import {Article} from "./Article.js"
 
 //defines main eventHub
@@ -11,6 +11,7 @@ export const renderArticlesInitial = () => {
     //adds articles container to main container
     eventHub.innerHTML += `<div class="articles">
         <div class="article-add"></div>
+        <div class="composeArticle-edit"></div>
         <div class="article-list"></div>
         <div class="friend-articles-list"></div>
     </div>`
@@ -34,7 +35,7 @@ const render = (articles) => {
     let articleListHTML = articles.map(article => {
         return Article(article)
     }).join("<br>")
-    //places task HTML list in content location
+    //places article HTML list in content location
     articleTarget.innerHTML = articleListHTML
 }
 
@@ -51,10 +52,10 @@ const renderArticleForm = () => {
     `
 }
 
-//renders a button that when clicked will display creating new task form
+//renders a button that when clicked will display creating new article form
 const renderArticleAddButton = () => {
-    const taskTarget = document.querySelector(".article-add")
-    taskTarget.innerHTML +=`<button id="newArticle">Create New Article</button><div class="article-form"></div>`
+    const articleTarget = document.querySelector(".article-add")
+    articleTarget.innerHTML +=`<button id="newArticle">Create New Article</button><div class="article-form"></div>`
 }
 
 //adds and eventListener to eventHub for specific events
@@ -103,7 +104,70 @@ eventHub.addEventListener("click", e => {
         e.target.textContent = "Create New Article"
         const contentHide = document.querySelector(".article-form")
         contentHide.innerHTML = ""
+    //brings up editing boxes when edit is clicked on a article
+    } else if(e.target.id.startsWith("editArticle--")){
+        const [prefix, id] = e.target.id.split("--")
+        editPrep(id)
+    //saves and re-renders edited article, removes edit box
+    } else if (e.target.id.startsWith("editArticleSave")){
+        const [prefix, id] = e.target.id.split("--")
+        editBuilder(id)
+        const articles = useArticles()
+        render(articles)
+        const hideTarget = document.querySelector(".composeArticle-edit")
+        hideTarget.innerHTML = ""
     }
-    //edit will be added here
 })
 
+// Render the area of the form where the article will be edited
+const editPrep = (articleId) => {
+    // Get an array of articles for comparison
+    const articles = useArticles()
+    // Find the correct article based of the ID
+    const matchingArticle = articles.find((article) => {
+        return article.id === parseInt(articleId)
+    })
+    // Declare where our HTML will be injected
+    const contentTarget = document.querySelector(".composeArticle-edit")
+    // Ensure only one article is edited at a time by checking to see if a article is currently being edited
+    if (contentTarget) {
+        // If a article is being edited, clear that so the new one can be edited instead
+        contentTarget.innerHTML = ""
+    }
+    // Create the HTML area
+    contentTarget.innerHTML += `
+        <div class="composearticle-space">
+            Edit:<input id="edit-article-url" type="text" value="${matchingArticle.url}"><br>
+            <input id="edit-article-title" type="text" value="${matchingArticle.title}"><br>
+            <input id="edit-article-synopsis" type="text" value="${matchingArticle.synopsis}"><br>
+            <button class="editArticleSave" id="editArticleSave--${articleId}">Save</button>
+        </div>
+        `
+}
+
+// Edit object that will be updated with new information
+const editBuilder = (articleId) => {
+    // Get an array of articles for comparison
+    const articles = useArticles()
+    // Find the correct articles based of the ID
+    const matchingArticle = articles.find((article) => {
+        return article.id === parseInt(articleId)
+    })
+    const articleUrl = document.querySelector("#edit-article-url")
+    const articleTitle = document.querySelector("#edit-article-title")
+    const articleSynopsis = document.querySelector("#edit-article-synopsis")
+    
+    // Retrieve the updated article the user has input
+    const newArticleRetrieve = {
+        url: articleUrl.value,
+        title: articleTitle.value,
+        synopsis: articleSynopsis.value
+    }
+    // Update the article object with the updated article
+    matchingArticle.url = newArticleRetrieve.url
+    matchingArticle.title = newArticleRetrieve.title
+    matchingArticle.synopsis = newArticleRetrieve.synopsis
+
+    // send the updated object to be pushed to the api
+    editArticle(matchingArticle, articleId)
+}
