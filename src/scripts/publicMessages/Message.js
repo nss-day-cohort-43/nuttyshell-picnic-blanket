@@ -53,7 +53,7 @@ const editPrep = (messageID) => {
         return message.id === parseInt(messageID)
     })
     // Declare where our HTML will be injected
-    const contentTarget = document.querySelector(".composePublicMessage-edit")
+    const contentTarget = document.querySelector(`#public-message-content-${messageID}`)
     // Ensure only one message is edited at a time by checking to see if a message is currently being edited
     if (contentTarget) {
         // If a message is being edited, clear that so the new one can be edited instead
@@ -62,7 +62,7 @@ const editPrep = (messageID) => {
     // Create the HTML area
     contentTarget.innerHTML += `
         <div class="editPublicMessage">
-            Edit:<input id="edit-message-input" type="text" value="${matchingMessage.message}">
+            <input id="edit-message-input" type="text" value="${matchingMessage.message}">
             <button class="editMessageSave" id="editMessageSave-${messageID}">Save</button>
         </div>
         `
@@ -70,19 +70,20 @@ const editPrep = (messageID) => {
 
 // Return the HTML to be rendered for others individual messages
 export const othersMessageWriter = message => {
-    return `<div class="public-message">${message.user.username}: ${message.message}</div>`
+    return `<div class="public-message" id="public-message-${message.id}">${message.user.username}: ${message.message}</div>`
 }
 
 // Return the HTML to be rendered for users individual messages
 export const myMessageWriter = message => {
-    return `<div class="public-message">
-                ${message.user.username}: ${message.message}
-                <div class="public-message-delete" id="deletePublicMessage-${message.id}">
-                    ❌
-                </div>
+    return `<div class="public-message" id="public-message-${message.id}">
+                ${message.user.username}: <div id="public-message-content-${message.id}">${message.message}</div>
                 <div class="public-message-edit" id="editPublicMessage-${message.id}">
                     ✏️
                 </div>
+                <div class="public-message-delete" id="deletePublicMessage-${message.id}">
+                    ❌
+                </div>
+                
             </div>
     `
 }

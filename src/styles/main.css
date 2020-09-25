@@ -37,34 +37,36 @@ header {
 
 .public-messages-box  {
     border: 1px solid;
-    padding: 1em;
-    max-height: 15em;
-    overflow-y:auto;
+    
+ 
 }
 
 .rendered-public-messages {
     max-height: 15em;
     overflow-y:auto;
+    padding: 1em;
 }
 
 .public-message {
     margin-top: 0.25em;
+    display: flex;
+    flex-direction: row;
 }
 
 .public-message-delete {
-    float: right;
+    
     font-size: 10px;
     cursor: pointer;
 }
 
 .public-message-edit {
-    float: right;
+    margin-left: auto;
     font-size: 10px;
     cursor: pointer;
 }
 
 .editPublicMessage{
-    margin-left: 7em;
+
 }
 
 #edit-message-input {
@@ -78,13 +80,15 @@ header {
 }
 
 .composePublicMessage-edit {
-    width: 100%;
+    
 }
 
 .composePublicMessage{
     display: flex;
     flex-direction: row;
 }
+
+
 
 /* ------------------- Authentication forms (login/register) -------------------- */
 
