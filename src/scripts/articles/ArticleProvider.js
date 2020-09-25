@@ -15,6 +15,7 @@ export const getArticles = () => {
 export const getfriendsArticles = () => {
     const userId = sessionStorage.getItem("activeUser")
     let friends = []
+    let relationshipsAdded = []
     fetch(`http://localhost:8088/friends?userId=${userId}`)
     .then(response => response.json())
     .then(
@@ -25,7 +26,13 @@ export const getfriendsArticles = () => {
             friends = friendsAdded
         }
     )
-    
+    .then(fetch(`http://localhost:8088/friends?_expand=user&userAdded=${userId}`))
+    .then(response => response.json())
+    .then(
+        parsedRelationships => {
+            relationshipsAdded = parsedRelationships
+        }
+    )
 }
 
 export const useArticles = () => {
