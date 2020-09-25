@@ -46,10 +46,14 @@ header {
 
 .public-message-delete {
     float: right;
+    font-size: 10px;
+    cursor: pointer;
 }
 
 .public-message-edit {
     float: right;
+    font-size: 10px;
+    cursor: pointer;
 }
 
 .editPublicMessage{
