@@ -1,4 +1,4 @@
-import {getArticles, useArticles, saveArticle, deleteArticle, editArticle} from "./ArticleProvider.js"
+import {getArticles, useArticles, saveArticle, deleteArticle} from "./ArticleProvider.js"
 import {Article} from "./Article.js"
 
 //defines main eventHub
