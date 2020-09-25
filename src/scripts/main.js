@@ -2,7 +2,6 @@ import { LoginForm } from "./auth/LoginForm.js"
 import { RegisterForm } from "./auth/RegisterForm.js"
 import { Nutshell } from "./Nutshell.js"
 
-
 //listen for user authentication either from the LoginForm or RegistrationForm
 const eventHub = document.querySelector('.container')
 
@@ -23,6 +22,7 @@ if(activeUser){
 else{
     LoginForm();
 }
+
 
 /*
     1. Check if the user is authenticated by looking in session storage for `activeUser`
