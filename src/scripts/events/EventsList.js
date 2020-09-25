@@ -7,8 +7,7 @@ const dashboard = document.querySelector('.dashboard')
 //Actually render events to the dom
 const render = () => {
     //grab the userId, get the user's events, then render those events to the dom
-    const userId = sessionStorage.getItem('activeUser')
-    getEvents(userId)
+    getEvents()
     .then(_ => {
         const events = useEvents()
         const contentElement = document.querySelector('.events-list')
