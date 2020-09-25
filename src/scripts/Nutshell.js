@@ -1,7 +1,10 @@
-//import render for all components here
+import {publicMessagesStarter} from './publicMessages/MessageBox.js'
 import {renderTasksInitial} from "./tasks/TaskList.js"
-//like renderTasks, renderArticles, renderEvents, etc
 
 export const Nutshell = () => {
+    // Render all your UI components here
+    //like renderTasks, renderArticles, renderEvents, etc
+    //import render for all components here
+    publicMessagesStarter()
     renderTasksInitial()
 }
