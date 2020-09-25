@@ -1,5 +1,6 @@
 let articles = []
 
+//fetches all of the users articles
 export const getArticles = () => {
     const userId = sessionStorage.getItem("activeUser")
     return fetch(`http://localhost:8088/articles?userId=${userId}`)
@@ -11,15 +12,16 @@ export const getArticles = () => {
     )
 }
 
+//sorts articles by most recent and returns a copy of the array
 export const useArticles = () => {
     function compare(a, b) {
-        const bandA = a.dateAdded
-        const bandB = b.dateAdded
+        const articleA = a.dateAdded
+        const articleB = b.dateAdded
       
         let comparison = 0;
-        if (bandA > bandB) {
+        if (articleA > articleB) {
           comparison = 1;
-        } else if (bandA < bandB) {
+        } else if (articleA < articleB) {
           comparison = -1;
         }
         return comparison *-1;
@@ -29,10 +31,7 @@ export const useArticles = () => {
     return articles.slice()
 }
 
-
-
-
-
+//saves a new article to the API
 export const saveArticle = articleObj => {
     return fetch("http://localhost:8088/articles", {
         method: "POST",
@@ -44,6 +43,7 @@ export const saveArticle = articleObj => {
     .then(getArticles)
 }
 
+//removes an article from the api
 export const deleteArticle = articleId => {
     return fetch(`http://localhost:8088/articles/${articleId}`, {
         method: "DELETE",
@@ -51,12 +51,4 @@ export const deleteArticle = articleId => {
     .then(getArticles)
 }
 
-export const editArticle = (articleObj, articleId) => {
-    return fetch(`http://localhost:8088/articles/${articleId}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(articleObj)
-  })
-}
+//edit function to be added here
