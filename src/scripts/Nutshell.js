@@ -1,4 +1,4 @@
-//import render for all components here
+import {publicMessagesStarter} from './publicMessages/MessageBox.js'
 import {renderTasksInitial} from "./tasks/TaskList.js"
 import { EventList } from './events/EventsList.js'
 
@@ -8,6 +8,9 @@ export const Nutshell = () => {
 
     //render the event list
     EventList();
+    //like renderTasks, renderArticles, renderEvents, etc
+    //import render for all components here
+    publicMessagesStarter()
     renderTasksInitial()
     
 }
