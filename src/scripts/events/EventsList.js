@@ -16,7 +16,7 @@ const render = () => {
             <h2>Events</h2>
             ${events.map(event => {
                 return Event(event)
-            }).join("")}
+            }).sort().join("")}
         `
     })
 }
