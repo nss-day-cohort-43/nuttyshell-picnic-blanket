@@ -1,14 +1,14 @@
 import {publicMessagesStarter} from './MessageBox.js'
 
-//Store Fetched Messages
+// Store Fetched Messages
 let publicMessages = []
 
-//Provide a copy of message array for use
+// Provide a copy of message array for use
 export const usePublicMessages = () => {
     return publicMessages.slice()
 }
 
-//Fetch messages that are not set to private and embed the message creater within the returned object
+// Fetch messages that are not set to private and embed the message creater within the returned object
 export const getPublicMessages = () => {
     return fetch('http://localhost:8088/messages?private=false&messages&_expand=user')
         .then(response => response.json())
@@ -17,7 +17,7 @@ export const getPublicMessages = () => {
         })
 }
 
-//Instert new messages into the database
+// Insert new messages into the database
 export const savePublicMessage = message => {
     return fetch("http://localhost:8088/messages", {
         method: "POST",
@@ -31,6 +31,7 @@ export const savePublicMessage = message => {
         publicMessagesStarter()
     })
 }
+
 // Delete a previously created public message
 export const deletePublicMessage = messageID => {
     return fetch(`http://localhost:8088/messages/${messageID}`, {
@@ -42,15 +43,7 @@ export const deletePublicMessage = messageID => {
 
     }
 
-
-
-
-
-
-
-
-// RESUME HERE
-//Edit a previously created public message
+// Edit a previously created public message in the api
 export const editPublicMessage = message => {
     return fetch(`http://localhost:8088/messages/${message.id}`, {
         method: "PUT",
@@ -59,4 +52,6 @@ export const editPublicMessage = message => {
         },
         body: JSON.stringify(message)
       })
+      // Then render the updated messages
+      .then(publicMessagesStarter)
     }
