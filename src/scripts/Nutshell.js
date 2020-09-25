@@ -9,5 +9,5 @@ export const Nutshell = () => {
     //render the event list
     EventList();
     renderTasksInitial()
-
+    
 }
