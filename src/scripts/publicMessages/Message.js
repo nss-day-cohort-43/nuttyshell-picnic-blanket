@@ -12,18 +12,34 @@ eventHub.addEventListener("click", event => {
         return message.id === parseInt(messageID)
     })
     const editBox = document.querySelector(".editPublicMessage")
-
-
     // If user pressed the delete icon
     if (isClicked === "public-message-delete") {
         deletePublicMessage(messageID)
     }
     // If user pressed the edit icon
     else {
+        // Check to see if you pressed edit
         if (isClicked ==="public-message-edit") {
+            // Check to see if an edit area already exists
             if (editBox) {
-                alert("Please save or cancel an edit before editing more!")
-                publicMessagesStarter()
+                // Get the id of the message edit message box so message be re-rendered
+                const findID = editBox.id
+                // Split the string and pull out just the message ID
+                const [prefix, foundID] = findID.split("-")
+                // Find target to replace original message
+                const oldMessageBox = document.querySelector(`#public-message-content-${foundID}`)
+                // Find the original message
+                const oldMessageFinder = messages.find((message) => {
+                    return message.id === parseInt(foundID)
+                })
+                // Pull just the message from the object
+                const oldMessage = oldMessageFinder.message
+                // Clear out the edit box
+                editBox.innerHTML = ""
+                // Put the old message content back in the box where it was before the attempted editing second message
+                oldMessageBox.innerHTML = oldMessage
+                // Send the message ID of the new edit target to the editPrep function for the editing area
+                editPrep(messageID)
             }
             else {
                 // Send message ID to the editPrep function for the editing area
@@ -44,6 +60,7 @@ eventHub.addEventListener("click", event => {
         }
     }
 })
+
 
 // Edit object that will be updated with new information
 const editBuilder = (messageID) => {
@@ -78,10 +95,11 @@ const editPrep = (messageID) => {
     }
     // Create the HTML area
     contentTarget.innerHTML += `
-        <div class="editPublicMessage">
+        <div class="editPublicMessage" id="editPublicMessage-${messageID}">
             <input id="edit-message-input" type="text" value="${matchingMessage.message}">
-            <button class="editMessageSave" id="editMessageSave-${messageID}">Save</button>
-            <button class="editCancel">Cancel</button>
+            <div class="editMessageSave" id="editMessageSave-${messageID}">💾</div>
+            <div class="editCancel">❌</div>
+            
         </div>
         `
 }
@@ -101,7 +119,6 @@ export const myMessageWriter = message => {
                 <div class="public-message-delete" id="deletePublicMessage-${message.id}">
                     ❌
                 </div>
-                
             </div>
     `
 }

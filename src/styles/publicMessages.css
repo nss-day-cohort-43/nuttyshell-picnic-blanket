@@ -1,0 +1,68 @@
+/* ------------- Public Message Content -------------- */
+
+.public-messages-box  {
+    border: 1px solid;
+}
+
+.rendered-public-messages {
+    max-height: 15em;
+    overflow-y:auto;
+    padding: 1em;
+}
+
+.public-message {
+    margin-top: 0.25em;
+    display: flex;
+    flex-direction: row;
+}
+
+.public-message-delete {
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.editPublicMessage {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.public-message-edit {
+    margin-left: auto;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+#edit-message-input {
+    margin-left: 0.5em;
+    width: 50%;
+}
+
+.editMessageSave {
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.editCancel {
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.publicMessagesTitle {
+    text-align: center;
+}
+
+.composePublicMessage{
+    display: flex;
+    flex-direction: row;
+}
+
+#newPublicMessage {
+    width: 50%;
+    margin-left: 1em;
+    margin-bottom: 1em;
+}
+
+.postPublicMessageBtn {
+    margin-bottom: 1em;
+}
