@@ -1,0 +1,44 @@
+
+#myFriends {
+    display: flex;
+    flex-direction: column;
+    min-width: 265px;
+    max-width: 300px;
+    background-color: whitesmoke;
+    border: black solid 2px;
+    padding: 10px;
+}
+
+#addFriend {
+    background-color: darkgrey;
+}
+
+#addNewFriend-btn {
+    width: 100%;
+    text-align: center;
+}
+
+.myFriendsTitle {
+    font-size: 2em;
+    margin: 5px auto;
+}
+
+.friendList-item { 
+    display: flex;
+    justify-content: space-between;
+}
+
+.friendList-item-actions {
+    margin: auto 2px;
+}
+
+.addFriend-form {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    flex-basis: 100%;
+}
+
+#saveFriendBtn {
+    background: rgb(46, 155, 250)
+}
