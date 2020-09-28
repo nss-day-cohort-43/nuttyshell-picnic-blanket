@@ -1,4 +1,7 @@
+import {getFriends, useFriends} from "../friends/FriendProvider.js"
+
 let articles = []
+let friendArticles = []
 
 //fetches all of the users articles
 export const getArticles = () => {
@@ -51,6 +54,7 @@ export const deleteArticle = articleId => {
     .then(getArticles)
 }
 
+//saves an article edit to the api
 export const editArticle = (articleObj, articleId) => {
     return fetch(`http://localhost:8088/tasks/${articleId}`, {
     method: "PUT",
@@ -59,4 +63,28 @@ export const editArticle = (articleObj, articleId) => {
     },
     body: JSON.stringify(articleObj)
   })
+}
+
+//fetches articles of a users friends
+export const getFriendArticles = (friends) => {
+  //defines what to add to URL to search multiple friends
+  const urlCode = (friendObj) => {
+    return `userId=${friendObj.userId}`
+  }
+  //joins all friends for URL with &
+  let userIdURL = friends.map(friend => {
+    return urlCode(friend)
+  }).join("&")
+  
+  //fetches and returns all articles by all friends
+  return fetch(`http://localhost:8088/articles?_expand=user&${userIdURL}`)
+  .then(response => response.json())
+  .then(parsedArticles => {
+    friendArticles = parsedArticles
+  })
+}
+
+//creates a copy of all friend articles
+export const useFriendArticles = () => {
+  return friendArticles.slice()
 }

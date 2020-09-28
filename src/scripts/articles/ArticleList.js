@@ -1,5 +1,6 @@
-import {getArticles, useArticles, saveArticle, deleteArticle, editArticle} from "./ArticleProvider.js"
-import {Article} from "./Article.js"
+import {getArticles, useArticles, saveArticle, deleteArticle, editArticle, getFriendArticles, useFriendArticles} from "./ArticleProvider.js"
+import {Article, FriendArticle} from "./Article.js"
+import {getFriends, useFriends} from "../friends/FriendProvider.js"
 
 //defines main eventHub
 const eventHub = document.querySelector(".dashboard")
@@ -18,12 +19,22 @@ export const renderArticlesInitial = () => {
     //gets user's articles from api
     getArticles()
     .then(useArticles)
+    .then(getFriends)
     .then(()=> {
         const myArticles = useArticles()
         //renders form for adding new articles
         renderArticleAddButton()
         //renders articles list
         render(myArticles)
+            const friends = useFriends()
+            if(friends.length !== 0){
+            //gets articles from your friends
+            getFriendArticles(friends)
+            .then(()=> {
+                const articles = useFriendArticles()
+                renderFriendArticles(articles)
+            })
+        }
     })
 }
 
@@ -170,4 +181,16 @@ const editBuilder = (articleId) => {
 
     // send the updated object to be pushed to the api
     editArticle(matchingArticle, articleId)
+}
+
+//renders all friend articles
+export const renderFriendArticles = (articleArray) => {
+    //defines content location in which the article list will render
+    const articleFriendTarget = document.querySelector(".friend-articles-list")
+    //iterates over all articles for the user and HTML list
+    let articleFriendListHTML = articleArray.map(article => {
+        return FriendArticle(article)
+    }).join("<br>")
+    //places article HTML list in content location
+    articleFriendTarget.innerHTML = articleFriendListHTML
 }
