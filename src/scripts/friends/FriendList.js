@@ -97,18 +97,21 @@ eventHub.addEventListener("click", event => {
             // If username entered is valid, send the friend a friend request and close the form
 
             // Use a .find() to find the specific username entered by the current user
+            // --------- EACH USERNAME SHOULD BE UNIQUE! ---------
             let targetUser = validUsers.find(user => {
                 return user === inputUsername.input;
             })
             console.log("targetUser: ", targetUser);
 
-            // Save your new friend:
-            saveFriend(targetUser);
-            // clear input
-            inputUsername.input = ""
-                toggleAddFriendForm();
+            // If a valid username was entered, add the friend
+            if(targetUser){
+                saveFriend(targetUser);     // save new friend
+                inputUsername.input = "";   // clear input
+                toggleAddFriendForm();      // close addFriend form
             }
-            else {
+            // If an invalid username was entered, display warning and keep input
+            else if(targetUser == undefined){
+                const warningTarget = document
             }
 
 

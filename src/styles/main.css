@@ -1,5 +1,5 @@
 
-@import url("friendList.css");
+@import "friendList.css";
 
 body {
     margin: 0;
