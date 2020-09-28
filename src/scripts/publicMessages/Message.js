@@ -18,32 +18,17 @@ eventHub.addEventListener("click", event => {
     if (isClicked === "public-message-delete") {
         deletePublicMessage(messageID)
     }
-
-
     // If user pressed the edit icon
     else {
         if (isClicked ==="public-message-edit") {
-
-            
-            if (editBox){
-                editBox.innerHTML = ""
-
-                
-                console.log(matchingMessage.message)
-
-
+            if (editBox) {
+                alert("Please save or cancel an edit before editing more!")
+                publicMessagesStarter()
             }
-
-
-
-
-
-
-
-            // Pull the message ID from the element ID
-            const [prefix, messageID] = event.target.id.split("-")
-            // Send message ID to the editPrep function for the editing area
-            editPrep(messageID)
+            else {
+                // Send message ID to the editPrep function for the editing area
+                editPrep(messageID)
+            }
         }
         else {
             // If user saves the updated message
