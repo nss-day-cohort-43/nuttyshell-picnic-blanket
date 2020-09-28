@@ -1,4 +1,5 @@
-import { getEventWeather, useEventWeather } from './EventsProvider.js'
+import { getEventWeather, useEventWeather, getEventCurrentWeather, useEventCurrentWeather } from './EventsProvider.js'
+
 
 //renders the weather for all events that it is possible for
 export const EventWeather = (events) => {
@@ -17,6 +18,17 @@ export const EventWeather = (events) => {
                 const eventCard = document.getElementById(`${event.startDate}-${event.id}`)
                 eventCard.innerHTML += `<button type="button" id="event-weather-btn-${event.id}">Show Weather</button>
                                         <div class="event-weather-container hidden" id="event-weather-${event.id}">${temp}&#730;F</div>
+                `
+            })
+        }
+        //if the event is not within 5 days get its current temp
+        else {
+            getEventCurrentWeather(event)
+            .then(_ => {
+                const temp = useEventCurrentWeather()
+                const eventCard = document.getElementById(`${event.startDate}-${event.id}`)
+                eventCard.innerHTML += `<button type="button" id="event-weather-btn-${event.id}">Show Weather</button>
+                                    <div class="event-weather-container hidden" id="event-weather-${event.id}">Unable to show weather of date.  Current Weather: ${temp}&#730;F</div>
                 `
             })
         }

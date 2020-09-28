@@ -4,6 +4,8 @@ import defaultExport from "../Settings.js"
 let events = []
 //variable to hold the temperature of an event
 let temp = 0
+//variable to hold current temp at an event location
+let currentTemp = 0
 
 //fetch events from the database using the current userId
 export const getEvents = () => {
@@ -77,6 +79,22 @@ export const getEventWeather = (event) => {
             temp = 0
         }
     })
+}
+
+//function that fetches the current weather at a given events location
+export const getEventCurrentWeather = (event) => {
+    return fetch(`http://api.openweathermap.org/data/2.5/weather?zip=${event.eventZip},US&units=imperial&appid=${defaultExport.weatherKey}`)
+    .then(response => response.json())
+    .then(
+        parsedWeather => {
+            currentTemp = parsedWeather.main.temp
+        }
+    )
+}
+
+//return the value of currentTemp
+export const useEventCurrentWeather = () => {
+    return currentTemp
 }
 
 //return the stored temp
