@@ -1,4 +1,4 @@
-import {weatherKey} from '../Settings.js'
+import defaultExport from "../Settings.js"
 
 //variable that holds the events
 let events = []
@@ -50,8 +50,9 @@ export const deleteEvent = eventId => {
     .then(dispatchEventChangeEvent)
 }
 
+//fetch the 5 day weather forecast for an events location
 export const getEventWeather = (event) => {
-    return fetch(`api.openweathermap.org/data/2.5/forecast?zip=${event.eventZip},us&appid=${weatherKey}`)
+    return fetch(`http://api.openweathermap.org/data/2.5/forecast?zip=${event.eventZip},us&appid=${defaultExport.weatherKey}`)
     .then(response => response.json())
     .then(parsedResponse => {
         const forecasts = parsedResponse.list

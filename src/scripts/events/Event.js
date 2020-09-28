@@ -22,7 +22,7 @@ eventHub.addEventListener('click', event => {
     }
     else if(event.target.id.startsWith("event-weather-btn-")){
         const [prefix, wather, btn, eventId] = event.target.id.split("-")
-        const eventWeatherHTML = document.querySelector(`#event-weather-${event.id}`)
+        const eventWeatherHTML = document.querySelector(`#event-weather-${eventId}`)
         if(eventWeatherHTML.classList.contains('hidden')){
             eventWeatherHTML.classList.remove('hidden')
             event.target.innerHTML = "Hide Weather"

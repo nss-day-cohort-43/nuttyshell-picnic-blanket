@@ -6,10 +6,11 @@ export const EventWeather = (events) => {
         const currentDate = new Date()
         const currentDateDays = Math.floor(currentDate.getTime()/ (1000*60*60*24))
         if(eventDate - currentDateDays <= 5){
+            debugger;
             getEventWeather(event)
             .then(_ => {
                 const temp = useEventWeather()
-                const eventCard = document.querySelector(`#${event.startDate}`)
+                const eventCard = document.getElementById(`${event.startDate}`)
                 eventCard.innerHTML += `<button type="button" id="event-weather-btn-${event.id}">Show Weather</button>
                                         <div class="event-weather-container hidden" id="event-weather-${event.id}">${temp}</div>
                 `
