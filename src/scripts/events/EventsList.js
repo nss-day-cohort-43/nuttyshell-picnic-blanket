@@ -23,6 +23,7 @@ const render = () => {
         if(nextEvent){
             nextEvent.classList.add("next-event")
         }
+        //render the weather for events
         EventWeather(events)
     })
 }

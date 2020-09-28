@@ -5,7 +5,7 @@ export const Event = (event) => {
     return `
         <div id="${event.startDate}" class="event-card">
             <h3>${event.name}</h3>
-            <div>Date: ${event.startDate}</div>
+            <div>Date: ${(new Date(event.startDate)).toLocaleDateString()}</div>
             <div>Location: ${event.eventCity}, ${event.eventState}</div>
             <button type="button" id="delete-event-${event.id}">Delete</button>
         </div>

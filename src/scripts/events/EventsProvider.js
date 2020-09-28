@@ -52,15 +52,17 @@ export const deleteEvent = eventId => {
 
 //fetch the 5 day weather forecast for an events location
 export const getEventWeather = (event) => {
-    return fetch(`http://api.openweathermap.org/data/2.5/forecast?zip=${event.eventZip},us&appid=${defaultExport.weatherKey}`)
+    return fetch(`http://api.openweathermap.org/data/2.5/forecast?zip=${event.eventZip},us&appid=${defaultExport.weatherKey}&units=imperial`)
     .then(response => response.json())
     .then(parsedResponse => {
         const forecasts = parsedResponse.list
+        //filter out the forecasts that do not fall on the same day as the event
         const eventDate = Math.floor(event.startDate / (1000*1000*60*60*24))
         const viableForecasts = forecasts.filter(forecast => {
             const forecastDate = Math.floor(forecast.dt / (1000*60*60*24))
             return forecastDate === eventDate
         })
+        //if there are forecasts for the event date, get the max temp for that day
         if(viableForecasts.length !== 0){
             debugger;
             const temps = viableForecasts.map(forecast => {
@@ -70,12 +72,14 @@ export const getEventWeather = (event) => {
             const maxTemp = Math.max(...temps)
             temp = maxTemp
         }
+        //if there are no forecasts for the event date, set temp to 0
         else{
             temp = 0
         }
     })
 }
 
+//return the stored temp
 export const useEventWeather = () => {
     return temp
 }
