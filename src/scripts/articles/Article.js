@@ -5,4 +5,8 @@ export const Article = (articleObj) => {
         <button id="deleteArticle--${articleObj.id}">Delete</button>
         <button id="editArticle--${articleObj.id}">Edit</button>`
 }
+
+export const FriendArticle = (articleObj) => {
+        return ``
+}
     

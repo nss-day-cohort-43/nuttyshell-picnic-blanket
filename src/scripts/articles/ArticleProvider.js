@@ -1,4 +1,7 @@
+import {getFriends, useFriends} from "../friends/FriendProvider.js"
+
 let articles = []
+let friendArticles = []
 
 //fetches all of the users articles
 export const getArticles = () => {
@@ -59,4 +62,33 @@ export const editArticle = (articleObj, articleId) => {
     },
     body: JSON.stringify(articleObj)
   })
+}
+
+export const getFriendArticles = () => {
+  let articles = []
+  getFriends()
+  .then(useFriends)
+  .then(() => {
+    const friends = useFriends()
+    const friendId = friends.map(friend => {
+      return friend.userId
+    })
+    for(const id of friendId){
+      return fetch(`http://localhost:8088/articles?userId=${id}`)
+      .then(response => response.json())
+      .then(
+        parsedArticles => {
+          articles.push(parsedArticles)
+        }
+      )
+    }
+  })
+  .then(()=>{
+    friendArticles = articles
+    console.log(friendArticles)
+  })
+}
+
+export const useFriendArticles = () => {
+  return friendArticles.slice()
 }
