@@ -41,6 +41,7 @@
 .editMessageSave {
     cursor: pointer;
     font-size: 14px;
+    margin-right: 0.5em;
 }
 
 .editCancel {
