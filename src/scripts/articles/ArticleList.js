@@ -26,14 +26,15 @@ export const renderArticlesInitial = () => {
         renderArticleAddButton()
         //renders articles list
         render(myArticles)
-        const friends = useFriends()
-        //gets articles from your friends
-        getFriendArticles(friends)
-        .then(()=> {
-            const articles = useFriendArticles()
-            renderFriendArticles(articles)
-        })
-        
+            const friends = useFriends()
+            if(friends.length !== 0){
+            //gets articles from your friends
+            getFriendArticles(friends)
+            .then(()=> {
+                const articles = useFriendArticles()
+                renderFriendArticles(articles)
+            })
+        }
     })
 }
 
