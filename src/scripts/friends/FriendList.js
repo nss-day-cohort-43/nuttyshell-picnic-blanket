@@ -1,5 +1,5 @@
 import { FriendHTML } from "./Friend.js"
-import { getFriends, useFriends, getUsers, useUsers, saveFriend, deleteFriend } from "./FriendProvider.js"
+import { getFriends, useFriends, getUsers, useUsers, saveFriend, deleteFriend, getFriendship, useFriendship } from "./FriendProvider.js"
 
 const eventHub = document.querySelector(".container");
 const userId = sessionStorage.getItem("activeUser"); // get the active user
@@ -17,6 +17,7 @@ export const renderFriendsInitial = () => {
                 <button type="button" id="addNewFriend-btn">Add a Friend</button>
                 <div id="addFriendByUsername"></div>
             </div>
+            <div id="friendsContainer"></div>
         </section>
     `
     getFriends() // fetch all of the current user's friends
@@ -35,15 +36,14 @@ const fetchValidUsernames = () => {
     getUsers()
     .then(() => {
         validUsers = useUsers();
-        console.log(validUsers);
     })
 }
 
 
 // create and render the list of friends
 const makeFriendList = (friends) => {
-    const friendsTarget = document.getElementById("myFriends");
-    friendsTarget.innerHTML += `
+    const friendsTarget = document.getElementById("friendsContainer");
+    friendsTarget.innerHTML = `
         <div class="friendsList">
         ${
             friends.map(friend => {
@@ -94,14 +94,6 @@ const toggleAddFriendForm = () => {
 
 }
 
-const deleteFriends2 = (idA, idB) => {
-    return deleteFriend(idA, idB) // delete friendship between friend and user
-        .then(getFriends)
-        .then(() => {
-            friendsArray = useFriends()
-            console.log(friendsArray);
-        })
-}
 
 // This event listener listens for clicks of the:
 //  - "addNewFriend-btn" button
@@ -113,17 +105,22 @@ eventHub.addEventListener("click", event => {
         toggleAddFriendForm(); // open or close the add friend form when "add new friend" button is pressed
     }
     else if(event.target.id.startsWith("deleteFriend-btn--")){
-        const [prefix, id] = event.target.id.split("--");
-        console.log(prefix);
-        console.log(id); // the id of the friend we want to delete
-        //debugger;
-        deleteFriends2(id, userId);
+        const [prefix, id, tacoId] = event.target.id.split("--");
+        //deletes relationship 1 to 2
+        deleteFriend(id)
+        //deletes relationship 2 to 1
+        getFriendship(tacoId)
+        .then(()=> {
+            const relationship = useFriendship()
+            const relationshipId = relationship.id
+            deleteFriend(relationshipId)
+        })
     }
     else if(event.target.id === "saveFriend-btn"){
         const inputUsername = document.querySelector(".friend-search-box");
         const warningTarget = document.querySelector(".invalid-username-warning");
-        console.log("inputUsername.value: ", inputUsername.value);
         const trimmedInput = inputUsername.value.trim();
+        const userId = sessionStorage.getItem("activeUser");
         // If username entered is not an empty string
         if(trimmedInput !== ""){
 
@@ -133,7 +130,6 @@ eventHub.addEventListener("click", event => {
             let targetUser = validUsers.find(user => {
                 return user.username === trimmedInput; // returns the matching user object
             })
-            console.log("targetUser: ", targetUser);
 
             // If a valid username was entered, and
             // If username entered is NOT the same as current user's
@@ -158,13 +154,13 @@ eventHub.addEventListener("click", event => {
                         // "id" of each friend object is auto-updated upon POST
                         const friendship_currentUserToFriend = {
                             userId: parseInt(userId),
-                            friendId: targetUser.id,
+                            tacoId: targetUser.id,
                             accepted: true
                         };
 
                         const friendship_friendToCurrentUser = {
                             userId: targetUser.id,
-                            friendId: parseInt(userId),
+                            tacoId: parseInt(userId),
                             accepted: true
                         };
 

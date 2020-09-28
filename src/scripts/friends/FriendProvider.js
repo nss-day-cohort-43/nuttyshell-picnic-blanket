@@ -18,8 +18,8 @@ export const getFriends = () => {
     const userId = sessionStorage.getItem("activeUser")
 
     // Fetch the friends of the current user
-    // where the userId = friendId -- get all users that are friends with that friendId
-    return fetch(`http://localhost:8088/friends?_expand=user&friendId=${userId}`) 
+    // where the userId = tacoId -- get all users that are friends with that tacoId
+    return fetch(`http://localhost:8088/friends?_expand=user&tacoId=${userId}`) 
     .then(response => response.json())
     .then(
         parsedRelationships => { // parsedRelationships is an array of objects!
@@ -32,28 +32,22 @@ export const useFriends = () => friends.slice();
 
 // -------------------- Get just one friendship ------------------
 
-export const getFriendship = (friendId) => {
+export const getFriendship = (tacoId) => {
     const userId = sessionStorage.getItem("activeUser");
-    return fetch(`http://localhost:8088/friends?&friendId=${friendId}&userId=${userId}`)
+    return fetch(`http://localhost:8088/friends?tacoId=${tacoId}&userId=${userId}`)
     .then(response => response.json())
     .then(
         parsedFriendAToB => {
-            friendship[0] = parsedFriendAToB
+            friendship = parsedFriendAToB[0]
         }
-    )
-    .then(
-        fetch(`http://localhost:8088/friends?&friendId=${userId}&userId=${friendId}`)
-        .then(response => response.json())
-        .then(
-            parsedFriendBToA => {
-                friendship[1] = parsedFriendBToA
-            }
-        )
     )
 }
 
-export const useFriendship = () => friendship.slice();
+export const useFriendship = () => {
+    return friendship
+}
 
+    
 // ------------------------ Get all users ----------------------------
 
 export const getUsers = () => {
@@ -61,9 +55,7 @@ export const getUsers = () => {
     .then(response => response.json())
     .then(
         parsedUsers => { // parsedUsers is an array of user objects
-            console.log("ParsedUsers: ", parsedUsers);
             users = parsedUsers; // array of user objects
-            console.log("users: ", users);
         }
     )
 }
@@ -86,8 +78,8 @@ export const saveFriend = (friend) => {
 }
 
 // ----------- Delete a selected friend from your friends in the api
-export const deleteFriend = (id1, id2) => {
-    return fetch(`http://localhost:8088/friends?&friendId=${id1}&userId=${id2}`, {
+export const deleteFriend = tacoId => {
+    return fetch(`http://localhost:8088/friends/${tacoId}`, {
         method: "DELETE",
     })
     .then(getFriends)
