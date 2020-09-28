@@ -60,9 +60,7 @@ export const getEventWeather = (event) => {
     .then(parsedResponse => {
         const forecasts = parsedResponse.list
         //filter out the forecasts that do not fall on the same day as the event
-        //const eventDate = Math.floor(event.startDate / (1000*1000*60*60*24))
         const viableForecasts = forecasts.filter(forecast => {
-            //const forecastDate = Math.floor(forecast.dt / (1000*60*60*24))
             return forecast.dt_txt.includes(event.startDate)
         })
         //if there are forecasts for the event date, get the max temp for that day
@@ -70,7 +68,6 @@ export const getEventWeather = (event) => {
             const temps = viableForecasts.map(forecast => {
                 return forecast.main.temp
             })
-    
             const maxTemp = Math.max(...temps)
             temp = maxTemp
         }
