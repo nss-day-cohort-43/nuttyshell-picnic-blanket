@@ -1,6 +1,6 @@
 import {getArticles, useArticles, saveArticle, deleteArticle, editArticle, getFriendArticles, useFriendArticles} from "./ArticleProvider.js"
 import {Article, FriendArticle} from "./Article.js"
-import { renderFriendsInitial } from "../friends/FriendList.js"
+import {getFriends} from "../friends/FriendProvider.js"
 
 //defines main eventHub
 const eventHub = document.querySelector(".dashboard")
@@ -18,6 +18,7 @@ export const renderArticlesInitial = () => {
     </div>`
     //gets user's articles from api
     getArticles()
+    .then(getFriends)
     .then(getFriendArticles)
     .then(useFriendArticles)
     .then(useArticles)
