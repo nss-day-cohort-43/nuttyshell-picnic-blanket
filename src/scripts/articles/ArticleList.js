@@ -1,6 +1,6 @@
 import {getArticles, useArticles, saveArticle, deleteArticle, editArticle, getFriendArticles, useFriendArticles} from "./ArticleProvider.js"
 import {Article, FriendArticle} from "./Article.js"
-import {getFriends} from "../friends/FriendProvider.js"
+import {getFriends, useFriends} from "../friends/FriendProvider.js"
 
 //defines main eventHub
 const eventHub = document.querySelector(".dashboard")
@@ -18,19 +18,22 @@ export const renderArticlesInitial = () => {
     </div>`
     //gets user's articles from api
     getArticles()
-    .then(getFriends)
-    .then(getFriendArticles)
-    .then(useFriendArticles)
     .then(useArticles)
+    .then(getFriends)
     .then(()=> {
         const myArticles = useArticles()
-        const friendArticles = useFriendArticles()
-        console.log(friendArticles)
         //renders form for adding new articles
         renderArticleAddButton()
         //renders articles list
         render(myArticles)
-        renderFriendArticles(friendArticles)
+        const friends = useFriends()
+        //gets articles from your friends
+        getFriendArticles(friends)
+        .then(()=> {
+            const articles = useFriendArticles()
+            renderFriendArticles(articles)
+        })
+        
     })
 }
 
@@ -179,15 +182,14 @@ const editBuilder = (articleId) => {
     editArticle(matchingArticle, articleId)
 }
 
+//renders all friend articles
 export const renderFriendArticles = (articleArray) => {
-    console.log(articleArray)
-    // //defines content location in which the article list will render
-    // const articleFriendTarget = document.querySelector(".friend-articles-list")
-    // //iterates over all articles for the user and HTML list
-    // let articleFriendListHTML = articles.map(article => {
-    //     return FriendArticle(article)
-    // }).join("<br>")
-    // //places article HTML list in content location
-    // articleFriendTarget.innerHTML = articleFriendListHTML
-
+    //defines content location in which the article list will render
+    const articleFriendTarget = document.querySelector(".friend-articles-list")
+    //iterates over all articles for the user and HTML list
+    let articleFriendListHTML = articleArray.map(article => {
+        return FriendArticle(article)
+    }).join("<br>")
+    //places article HTML list in content location
+    articleFriendTarget.innerHTML = articleFriendListHTML
 }
