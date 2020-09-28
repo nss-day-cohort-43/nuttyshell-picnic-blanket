@@ -6,14 +6,40 @@ const eventHub = document.querySelector(".container")
 // Listen for clicks on individual messages and respond accordingly
 eventHub.addEventListener("click", event => {
     const isClicked = event.target.classList.value
+    const [prefix, messageID] = event.target.id.split("-")
+    const messages = usePublicMessages()
+    const matchingMessage = messages.find((message) => {
+        return message.id === parseInt(messageID)
+    })
+    const editBox = document.querySelector(".editPublicMessage")
+
+
     // If user pressed the delete icon
     if (isClicked === "public-message-delete") {
-        const [prefix, messageID] = event.target.id.split("-")
         deletePublicMessage(messageID)
     }
+
+
     // If user pressed the edit icon
     else {
         if (isClicked ==="public-message-edit") {
+
+            
+            if (editBox){
+                editBox.innerHTML = ""
+
+                
+                console.log(matchingMessage.message)
+
+
+            }
+
+
+
+
+
+
+
             // Pull the message ID from the element ID
             const [prefix, messageID] = event.target.id.split("-")
             // Send message ID to the editPrep function for the editing area
@@ -27,8 +53,6 @@ eventHub.addEventListener("click", event => {
             }
             else {
                 if (isClicked === "editCancel") {
-                    //////// Right Here
-                    console.log("nevermind")
                     publicMessagesStarter()
                 }
             }
