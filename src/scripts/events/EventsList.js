@@ -1,6 +1,7 @@
 import { getEvents, useEvents } from './EventsProvider.js'
 import { Event } from './Event.js'
 import { EventForm } from './EventForm.js'
+import { EventWeather } from './EventWeather.js'
 
 const dashboard = document.querySelector('.dashboard')
 
@@ -19,7 +20,10 @@ const render = () => {
             }).sort().join("")}
         `
         const nextEvent = document.querySelector(".event-card")
-        nextEvent.classList.add("next-event")
+        if(nextEvent){
+            nextEvent.classList.add("next-event")
+        }
+        EventWeather(events)
     })
 }
 

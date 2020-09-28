@@ -51,9 +51,29 @@ export const deleteEvent = eventId => {
 }
 
 export const getEventWeather = (event) => {
-    return fetch(`api.openweathermap.org/data/2.5/forecast?zip=${event.zip},US&appid=${weatherKey}`)
+    return fetch(`api.openweathermap.org/data/2.5/forecast?zip=${event.eventZip},us&appid=${weatherKey}`)
     .then(response => response.json())
     .then(parsedResponse => {
-        temp = parsedRespons.list[0].main.temp
+        const forecasts = parsedResponse.list
+        const eventDate = Math.floor(event.startDate / (1000*60*60*24))
+        const viableForecasts = forecasts.filter(forecast => {
+            const forecastDate = Math.floor(forecast.dt / (1000*60*60*24))
+            return forecastDate - eventDate === 0
+        })
+        if(viableForecasts.length !== 0){
+            const temps = viableForecasts.map(forecast => {
+                return forecast.main.temp
+            })
+    
+            const maxTemp = Math.max(temps)
+            temp = maxTemp
+        }
+        else{
+            temp = 0
+        }
     })
+}
+
+export const useEventWeather = () => {
+    return temp
 }

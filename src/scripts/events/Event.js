@@ -20,4 +20,16 @@ eventHub.addEventListener('click', event => {
         const [prefix, filler, eventId] = event.target.id.split("-")
         deleteEvent(parseInt(eventId))
     }
+    else if(event.target.id.startsWith("event-weather-btn-")){
+        const [prefix, wather, btn, eventId] = event.target.id.split("-")
+        const eventWeatherHTML = document.querySelector(`#event-weather-${event.id}`)
+        if(eventWeatherHTML.classList.contains('hidden')){
+            eventWeatherHTML.classList.remove('hidden')
+            event.target.innerHTML = "Hide Weather"
+        }
+        else{
+            eventWeatherHTML.classList.add('hidden')
+            event.target.innerHTML = "Show Weather"
+        }
+    }
 })
