@@ -1,4 +1,5 @@
 import {deletePublicMessage, editPublicMessage, usePublicMessages} from './MessageProvider.js'
+import {publicMessagesStarter} from './MessageBox.js' 
 
 const eventHub = document.querySelector(".container")
 
@@ -26,7 +27,9 @@ eventHub.addEventListener("click", event => {
             }
             else {
                 if (isClicked === "editCancel") {
+                    //////// Right Here
                     console.log("nevermind")
+                    publicMessagesStarter()
                 }
             }
         }
