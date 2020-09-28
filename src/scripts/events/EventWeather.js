@@ -14,7 +14,7 @@ export const EventWeather = (events) => {
             .then(_ => {
                 //render the weather using the fetched temperature
                 const temp = useEventWeather()
-                const eventCard = document.getElementById(`${event.startDate}`)
+                const eventCard = document.getElementById(`${event.startDate}-${event.id}`)
                 eventCard.innerHTML += `<button type="button" id="event-weather-btn-${event.id}">Show Weather</button>
                                         <div class="event-weather-container hidden" id="event-weather-${event.id}">${temp}&#730;F</div>
                 `

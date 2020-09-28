@@ -2,6 +2,7 @@ import defaultExport from "../Settings.js"
 
 //variable that holds the events
 let events = []
+//variable to hold the temperature of an event
 let temp = 0
 
 //fetch events from the database using the current userId
@@ -64,7 +65,6 @@ export const getEventWeather = (event) => {
         })
         //if there are forecasts for the event date, get the max temp for that day
         if(viableForecasts.length !== 0){
-            debugger;
             const temps = viableForecasts.map(forecast => {
                 return forecast.main.temp
             })
