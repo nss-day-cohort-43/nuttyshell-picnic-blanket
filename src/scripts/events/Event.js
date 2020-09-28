@@ -3,9 +3,9 @@ import { deleteEvent } from './EventsProvider.js'
 //creates html for a given event
 export const Event = (event) => {
     return `
-        <div id="${event.startDate}-${event.id}" class="event-card">
+        <div id="${event.startDate}--${event.id}" class="event-card">
             <h3>${event.name}</h3>
-            <div>Date: ${(new Date(event.startDate + 86400000)).toLocaleDateString()}</div>
+            <div>Date: ${event.startDate}</div>
             <div>Location: ${event.eventCity}, ${event.eventState}</div>
             <button type="button" id="delete-event-${event.id}">Delete</button>
         </div>
