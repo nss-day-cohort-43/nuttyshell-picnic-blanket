@@ -6,7 +6,6 @@ const activeUser = sessionStorage.getItem("activeUser"); // get the active user
 
 // renders current user's friends when first opening Nutshell
 export const renderFriendsInitial = () => {
-    console.log("activeUser", activeUser);
     const friendsContentTarget = document.querySelector(".dashboard")
     friendsContentTarget.innerHTML += `
         <section id="myFriends">
@@ -76,12 +75,9 @@ eventHub.addEventListener("click", event => {
         toggleAddFriendForm();
     }
     else if(event.target.id === "saveFriendBtn"){
-        console.log("Save FRIEND!!")
         const input = document.querySelector(".friend-search-box");
         // check if username is entered
         if(input.input !== ""){
-            console.log(input.input);
-            console.log("Someone entered something")
             // If username entered is valid, send the friend a friend request and close the form
             // TODO: Check if username entered is valid
             // and send the friend a friend request
@@ -103,7 +99,6 @@ eventHub.addEventListener("click", event => {
         }
         else {
             // No username entered, do nothing
-            console.log("nothing")
 
         }
     }
