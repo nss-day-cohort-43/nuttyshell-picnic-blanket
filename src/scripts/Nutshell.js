@@ -4,6 +4,7 @@ import {renderFriendsInitial} from "./friends/FriendList.js"
 //like renderTasks, renderArticles, renderEvents, etc
 
 export const Nutshell = () => {
-    renderTasksInitial()
     renderFriendsInitial()
+    renderTasksInitial()
+    
 }

@@ -1,16 +1,14 @@
 let friends = [];
 
 export const getFriends = () => {
-    debugger;
     const usrId = sessionStorage.getItem("activeUser")
-    console.log("usrId: ",usrId)
-    fetch(`http://localhost:8088/friends?userId=${usrId}`)
+
+    // Fetch the friends of the current user
+    // where the userId = friendId -- get all users that are friends with that friendId
+    return fetch(`http://localhost:8088/friends?_expand=user&friendId=${usrId}`) 
     .then(response => response.json())
     .then(
-        parsedRelationships => {
-            console.log("Here!")
-            //const currentUserFriends = parsedRelationships.filter(friend => friend.userId === usrId )
-            //friends = currentUserFriends
+        parsedRelationships => { // parsedRelationships is an array of objects!
             friends = parsedRelationships
         }
     )
