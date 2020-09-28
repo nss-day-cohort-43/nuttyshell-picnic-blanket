@@ -56,17 +56,18 @@ export const getEventWeather = (event) => {
     .then(response => response.json())
     .then(parsedResponse => {
         const forecasts = parsedResponse.list
-        const eventDate = Math.floor(event.startDate / (1000*60*60*24))
+        const eventDate = Math.floor(event.startDate / (1000*1000*60*60*24))
         const viableForecasts = forecasts.filter(forecast => {
             const forecastDate = Math.floor(forecast.dt / (1000*60*60*24))
-            return forecastDate - eventDate === 0
+            return forecastDate === eventDate
         })
         if(viableForecasts.length !== 0){
+            debugger;
             const temps = viableForecasts.map(forecast => {
                 return forecast.main.temp
             })
     
-            const maxTemp = Math.max(temps)
+            const maxTemp = Math.max(...temps)
             temp = maxTemp
         }
         else{

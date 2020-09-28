@@ -6,7 +6,6 @@ export const EventWeather = (events) => {
         const currentDate = new Date()
         const currentDateDays = Math.floor(currentDate.getTime()/ (1000*60*60*24))
         if(eventDate - currentDateDays <= 5){
-            debugger;
             getEventWeather(event)
             .then(_ => {
                 const temp = useEventWeather()
