@@ -10,7 +10,8 @@ const userId = sessionStorage.getItem("activeUser")
 export const renderTasksInitial = () => {
     //adds tasks container to main container
     eventHub.innerHTML += `<div class="tasks">
-        <div class="task-form"></div>
+        <div class="task-add"></div>
+        <div class="composeTask-edit"></div>
         <div class="task-list"></div>
     </div>`
     //gets user's tasks from api
@@ -18,8 +19,8 @@ export const renderTasksInitial = () => {
     .then(useTasks)
     .then(()=> {
         const myTasks = useTasks()
-        //renders form for adding new tasks
-        renderTaskForm()
+        //renders button for adding new tasks
+        renderTaskAddButton()
         //renders task list
         render(myTasks)
     })
@@ -49,6 +50,14 @@ const renderTaskForm = () => {
         <button id="saveTask">Save New Task</button>
     `
 }
+
+//renders a button that when clicked will display creating new task form
+const renderTaskAddButton = () => {
+    const taskTarget = document.querySelector(".task-add")
+    taskTarget.innerHTML +=`<button id="newTask">Create New Task</button><div class="task-form"></div>`
+}
+
+
 
 //adds and eventListener to eventHub for specific events
 eventHub.addEventListener("click", e => {
@@ -88,9 +97,78 @@ eventHub.addEventListener("click", e => {
             const tasks = useTasks()
             render(tasks)
         })
+    //when create new task button is clicked, it will render or hide task addition form
+    } else if(e.target.id === "newTask" && e.target.textContent === "Create New Task"){
+        renderTaskForm()
+        e.target.textContent = "Hide Task Form"
+    } else if(e.target.id === "newTask" && e.target.textContent === "Hide Task Form"){
+        e.target.textContent = "Create New Task"
+        const contentHide = document.querySelector(".task-form")
+        contentHide.innerHTML = ""
+    //brings up editing boxes when edit is clicked on a task
+    } else if(e.target.id.startsWith("editTask--")){
+        const [prefix, id] = e.target.id.split("--")
+        editPrep(id)
     }
-    //edit will be added here
+    //saves and re-renders edited task, removes edit box
+    else if (e.target.id.startsWith("editTaskSave")){
+        const [prefix, id] = e.target.id.split("--")
+        editBuilder(id)
+        const tasks = useTasks()
+        render(tasks)
+        const hideTarget = document.querySelector(".composeTask-edit")
+        hideTarget.innerHTML = ""
+    }
 })
+
+// Render the area of the form where the task will be edited
+const editPrep = (taskId) => {
+    // Get an array of tasks for comparison
+    const tasks = useTasks()
+    // Find the correct task based of the ID
+    const matchingTask = tasks.find((task) => {
+        return task.id === parseInt(taskId)
+    })
+    // Declare where our HTML will be injected
+    const contentTarget = document.querySelector(".composeTask-edit")
+    // Ensure only one task is edited at a time by checking to see if a task is currently being edited
+    if (contentTarget) {
+        // If a task is being edited, clear that so the new one can be edited instead
+        contentTarget.innerHTML = ""
+    }
+    // Create the HTML area
+    contentTarget.innerHTML += `
+        <div class="composeTask-space">
+            Edit:<input id="edit-task-input" type="text" value="${matchingTask.task}"><br>
+            <label for="completionDate">Expected Completion Date:</label><br>
+            <input type="date" id="edit-completionDate" name="completionDate" value="${matchingTask.expectedCompletionDate}"><br>
+            <button class="editTaskSave" id="editTaskSave--${taskId}">Save</button>
+        </div>
+        `
+}
+
+// Edit object that will be updated with new information
+const editBuilder = (taskId) => {
+    // Get an array of tasks for comparison
+    const tasks = useTasks()
+    // Find the correct tasks based of the ID
+    const matchingTask = tasks.find((task) => {
+        return task.id === parseInt(taskId)
+    })
+    const taskContent = document.querySelector("#edit-task-input")
+    const taskDate = document.querySelector("#edit-completionDate")
+    // Retrieve the updated task the user has input
+    const newTaskRetrieve = {
+        task: taskContent.value,
+        expectedCompletionDate: taskDate.value
+    }
+    // Update the task object with the updated task
+    matchingTask.task = newTaskRetrieve.task
+    matchingTask.expectedCompletionDate = newTaskRetrieve.expectedCompletionDate
+
+    // send the updated object to be pushed to the api
+    editTask(matchingTask, taskId)
+}
 
 //listens for change event in task checkboxes
 eventHub.addEventListener("change", e=> {
