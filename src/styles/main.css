@@ -2,6 +2,7 @@
 
 
 @import url("friendList.css");
+@import url("publicMessages.css");
 
 body {
     margin: 0;
@@ -37,58 +38,7 @@ header {
 }
 
 
-/* ------------- Public Message Content -------------- */
 
-.public-messages-box  {
-    border: 1px solid;
-    padding: 1em;
-    max-height: 15em;
-    overflow-y:auto;
-}
-
-.rendered-public-messages {
-    max-height: 15em;
-    overflow-y:auto;
-}
-
-.public-message {
-    margin-top: 0.25em;
-}
-
-.public-message-delete {
-    float: right;
-    font-size: 10px;
-    cursor: pointer;
-}
-
-.public-message-edit {
-    float: right;
-    font-size: 10px;
-    cursor: pointer;
-}
-
-.editPublicMessage{
-    margin-left: 7em;
-}
-
-#edit-message-input {
-    margin-left: 0.5em;
-    width: 50%;
-}
-
-.publicMessagesTitle {
-    text-align: center;
-    
-}
-
-.composePublicMessage-edit {
-    width: 100%;
-}
-
-.composePublicMessage{
-    display: flex;
-    flex-direction: row;
-}
 
 /* ------------------- Authentication forms (login/register) -------------------- */
 
