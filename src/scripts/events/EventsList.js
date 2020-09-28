@@ -54,13 +54,3 @@ eventHub.addEventListener('eventStateChanged', event => {
     //render the eventlist
     render()
 })
-
-const EventsListHTML = (events) => {
-    const sortedEventsHTML = events.map(event => {
-        return Event(event)
-    }).sort().join("")
-
-    debugger;
-    const nextEvent = sortedEventsHTML[0]
-
-}
