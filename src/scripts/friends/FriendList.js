@@ -1,8 +1,10 @@
 import { FriendHTML } from "./Friend.js"
-import { getFriends, useFriends } from "./FriendProvider.js"
+import { getFriends, useFriends, getUsers, useUsers, saveFriend } from "./FriendProvider.js"
 
 const eventHub = document.querySelector(".container");
 const activeUser = sessionStorage.getItem("activeUser"); // get the active user
+
+let validUsers = [];
 
 // renders current user's friends when first opening Nutshell
 export const renderFriendsInitial = () => {
@@ -16,13 +18,27 @@ export const renderFriendsInitial = () => {
             </div>
         </section>
     `
-    getFriends()
+    getFriends() // fetch all of the current user's friends
     .then(() => {
         const friends = useFriends();
         makeFriendList(friends);
     })
+    .then(() => {
+        // fetch usernames of all valid users and store them in an array 
+        fetchValidUsernames(); 
+    })
 }
 
+// get and store a copy of the usernames of all verified Nutshell users
+const fetchValidUsernames = () => {
+    getUsers()
+    .then(() => {
+        validUsers = useUsers();
+    })
+}
+
+
+// create and render the list of friends
 const makeFriendList = (friends) => {
     const friendsTarget = document.getElementById("myFriends");
     friendsTarget.innerHTML += `
@@ -72,29 +88,29 @@ const toggleAddFriendForm = () => {
 
 eventHub.addEventListener("click", event => {
     if(event.target.id === "addNewFriend-btn"){
-        toggleAddFriendForm();
+        toggleAddFriendForm(); // open or close the add friend form when "add new friend" button is pressed
     }
     else if(event.target.id === "saveFriendBtn"){
-        const input = document.querySelector(".friend-search-box");
+        const inputUsername = document.querySelector(".friend-search-box");
         // check if username is entered
-        if(input.input !== ""){
+        if(inputUsername.input !== ""){
             // If username entered is valid, send the friend a friend request and close the form
-            // TODO: Check if username entered is valid
-            // and send the friend a friend request
 
-            /* if (username is valid) {
-                - Send friend request to the friend
-                - clear input box content
-                - close addFriend form: */
+            // Use a .find() to find the specific username entered by the current user
+            let targetUser = validUsers.find(user => {
+                return user === inputUsername.input;
+            })
+            console.log("targetUser: ", targetUser);
+
+            // Save your new friend:
+            saveFriend(targetUser);
+            // clear input
+            inputUsername.input = ""
                 toggleAddFriendForm();
-                /*
             }
             else {
-                - display below input box that username is not valid
-                - keep content in input box
             }
 
-            */
 
         }
         else {
