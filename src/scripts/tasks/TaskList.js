@@ -10,8 +10,7 @@ const userId = sessionStorage.getItem("activeUser")
 export const renderTasksInitial = () => {
     //adds tasks container to main container
     eventHub.innerHTML += `<div class="tasks">
-        <div class="task-add">
-        </div>
+        <div class="task-add"></div>
         <div class="composeTask-edit"></div>
         <div class="task-list"></div>
     </div>`
