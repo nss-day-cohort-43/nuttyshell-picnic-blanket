@@ -1,7 +1,7 @@
-import {publicMessagesStarter} from './publicMessages/MessageBox.js'
+import {chatFeed, publicMessagesStarter} from './publicMessages/MessageBox.js'
 import {renderTasksInitial} from "./tasks/TaskList.js"
 import { EventList } from './events/EventsList.js'
-import {renderArticlesInitial, renderFriendArticles} from "./articles/ArticleList.js"
+import {renderArticlesInitial} from "./articles/ArticleList.js"
 import { renderFriendsInitial } from './friends/FriendList.js'
 import {renderWeatherInitial} from './weather/Weather.js'
 
@@ -18,4 +18,5 @@ export const Nutshell = () => {
     publicMessagesStarter()
     renderTasksInitial()
     renderArticlesInitial()
+    chatFeed()
 }
