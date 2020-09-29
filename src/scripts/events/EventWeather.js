@@ -15,10 +15,8 @@ export const EventWeather = (events) => {
             .then(_ => {
                 //render the weather using the fetched temperature
                 const temp = useEventWeather()
-                const eventCard = document.getElementById(`${event.startDate}--${event.id}`)
-                eventCard.innerHTML += `<button type="button" id="event-weather-btn-${event.id}">Show Weather</button>
-                                        <div class="event-weather-container no-display" id="event-weather-${event.id}">${temp}&#730;F</div>
-                `
+                const eventWeather = document.getElementById(`event-weather-${event.id}`)
+                eventWeather.innerHTML = `${temp}&#730;F`
             })
         }
         //if the event is not within 5 days get its current temp
@@ -26,10 +24,8 @@ export const EventWeather = (events) => {
             getEventCurrentWeather(event)
             .then(_ => {
                 const temp = useEventCurrentWeather()
-                const eventCard = document.getElementById(`${event.startDate}--${event.id}`)
-                eventCard.innerHTML += `<button type="button" id="event-weather-btn-${event.id}">Show Weather</button>
-                                    <div class="event-weather-container no-display" id="event-weather-${event.id}">Unable to show weather of date.  Current Weather: ${temp}&#730;F</div>
-                `
+                const eventWeather = document.getElementById(`event-weather-${event.id}`)
+                eventWeather.innerHTML = `Cannot display of temperature at this date.  Current temp: ${temp}&#730;F`
             })
         }
     })
