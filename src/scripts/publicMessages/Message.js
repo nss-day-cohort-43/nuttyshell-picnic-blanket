@@ -106,19 +106,44 @@ const editPrep = (messageID) => {
 
 // Return the HTML to be rendered for users individual messages
 export async function messageWriter (message) {
-    if (message.userId === parseInt(sessionStorage.getItem("activeUser"))) {
-        return `<div class="public-message" id="public-message-${message.id}">
-                    ${message.user.username}: <div id="public-message-content-${message.id}">${message.message}</div>
-                    <div class="public-message-edit" id="editPublicMessage-${message.id}">
-                        ✏️
+    const activeUser = parseInt(sessionStorage.getItem("activeUser"))
+    // Check and continue only if message is public
+    if (message.private === false) {
+        // Allow users to edit their own messages
+        if (message.userId === activeUser) {
+            return `<div class="public-message" id="public-message-${message.id}">
+                        ${message.user.username}: <div id="public-message-content-${message.id}">${message.message}</div>
+                        <div class="public-message-edit" id="editPublicMessage-${message.id}">
+                            ✏️
+                        </div>
+                        <div class="public-message-delete" id="deletePublicMessage-${message.id}">
+                            ❌
+                        </div>
                     </div>
-                    <div class="public-message-delete" id="deletePublicMessage-${message.id}">
-                        ❌
-                    </div>
-                </div>
-        `
-    } else {
-        return `<div class="public-message" id="public-message-${message.id}">${message.user.username}: ${message.message}</div>`
+            `
+        } 
+        else {
+            return `<div class="public-message" id="public-message-${message.id}">${message.user.username}: ${message.message}</div>`
+        }
     }
-
+    else {
+        // Render private message for recipients eyes only
+        if (message.private === true && message.userReceive === activeUser && message.userId !== activeUser) {
+            return `<div class="public-message" id="public-message-${message.id}">${message.user.username}: ${message.message}</div>`
+        }
+        else {
+            // Render private message for recipients eyes only with abilite to edit
+            if (message.private === true && message.userReceive !== activeUser && message.userId === activeUser) {
+                return `<div class="public-message" id="public-message-${message.id}">
+                            ${message.user.username}: <div id="public-message-content-${message.id}">${message.message}</div>
+                            <div class="public-message-edit" id="editPublicMessage-${message.id}">
+                                ✏️
+                            </div>
+                            <div class="public-message-delete" id="deletePublicMessage-${message.id}">
+                                ❌
+                            </div>
+                        </div>`
+            }
+        }
+    }
 }
