@@ -2,7 +2,6 @@
 #myFriends {
     display: flex;
     flex-direction: column;
-    min-width: 265px;
     background-color: whitesmoke;
     border: black solid 2px;
     padding: 10px;

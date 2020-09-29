@@ -7,6 +7,11 @@
 body {
     margin: 0;
     padding: 0;
+    font-family: 'Yantramanav', sans-serif;
+}
+
+button {
+    font-family: inherit
 }
 
 .hidden { 
@@ -122,36 +127,73 @@ header {
 
 
  /* --------------------- Actual user content ------------------ */
+ .articles{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto;
+    grid-area: articles;
+
+} 
+
+.tasks {
+    border: 1px solid;
+    grid-area: tasks;
+}
+
+.weather{
+    grid-area: weather;
+    border: 1px solid;
+    padding-right: 5px;
+    padding-left: 5px;
+    padding-bottom: 10px;
+}
+
+.public-messages {
+    grid-area: chat;
+}
+
+#myFriends {
+    grid-area: friends;
+}
+
+.events-container {
+    grid-area: events;
+    border: 1px solid;
+    padding-right: 5px;
+    padding-left: 5px;
+    padding-bottom: 10px;
+}
+
 .dashboard { 
     background-color: dimgray;
     margin: 10px 0;
     display: grid;
-    grid-template-columns: 33% 33% 33%;
-    grid-template-rows: auto; 
+    grid-template-columns: 12% 35% 35% 18%;
+    grid-template-rows: auto;
+    grid-template-areas: 
+    "weather chat chat friends"
+    "tasks chat chat friends"
+    "tasks articles articles friends"
+    "tasks events events friends";
 }
 
-.articles{
-    display: grid;
-    border: 1px solid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: auto; 
-}
+
 
 .myArticleContainer{
     border: 1px solid;
     padding-right: 10px;
     padding-left: 10px;
+    padding-bottom: 10px;
 }
 
 .friend-articles-list{
     border: 1px solid;
     padding-right: 10px;
     padding-left: 10px;
+    padding-bottom: 10px;
 }
 
-.tasks {
-    border: 1px solid;
-}
+
 
 /* ------------------ Footer --------------------- */
 
