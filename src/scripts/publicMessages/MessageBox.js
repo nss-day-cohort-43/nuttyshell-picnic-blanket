@@ -42,7 +42,6 @@ eventHub.addEventListener("click", event => {
                     allFriends.map((friend) => {
                         friendsArray.push(friend.user.username)
                     })
-
                     // Do this if "recipient" is a friend
                     if (friendsArray.includes(recipient)) {
                         //Retrieve the recipients entire object
@@ -87,13 +86,10 @@ export const publicMessagesStarter = () => {
         `
     //Begin filling that section with individual messages
     messagesRender()
-    
 }
 
 //Place each individual message into the box reserved for public messages
 async function messagesRender() {
-    //Fetch updated messages and then only continue when that step has completed
-    
     //Get an array of fetched messages to use
     let messages = await getPublicMessages()
     //Set the destination for where individual messages should be rendered
@@ -103,6 +99,7 @@ async function messagesRender() {
         return Promise.all(messages.map(messageObj => messageWriter(messageObj)))
     }
     showMessages().then(result => {
+        
         contentTarget.innerHTML = result.join("")
     })
      // Target element where rendered messages are
