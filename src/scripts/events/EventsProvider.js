@@ -9,8 +9,8 @@ let temp = 0
 let currentTemp = 0
 //variable to store friends events
 let friendsEvents = []
-//variable to hold users
-let users = []
+//variable that holds events with expanded users
+let expandedEvents = []
 
 //fetch events from the database using the current userId
 export const getEvents = () => {
@@ -117,26 +117,24 @@ export const editEvent = (event) => {
     .then(dispatchEventChangeEvent)
 }
 
-//fetch array of current users friends events
+//get array of current users friends events
 export const getFriendsEvents = () => {
-    return fetch(`http://localhost:8088/users?_embed=events&_embed=friends`)
+    //fetch events with expanded users
+    return fetch(`http://localhost:8088/events?_expand=user`)
     .then(response => response.json())
     .then(parsedResponse => {
-        users = parsedResponse
+        expandedEvents = parsedResponse
     })
+    //get the friends of the current user
     .then(getFriends)
     .then(_ => {
-        debugger;
+        //get all the friends ids of the current user
         const friendsIds = useFriends().map(friend => {
             return friend.userId
         })
-        const friendsUsers = users.filter(user => {
-            return friendsIds.includes(user.id)
-        })
-        friendsUsers.forEach(user => {
-            user.events.forEach(event => {
-                friendsEvents.push(event)
-            })
+        //filter out events that do not belong to a friend
+        friendsEvents = expandedEvents.filter(event => {
+            return friendsIds.includes(event.userId)
         })
     })
 }
