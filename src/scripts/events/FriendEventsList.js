@@ -1,5 +1,6 @@
 import { FriendEvent } from './FriendEvent.js'
 import { getFriendsEvents, useFriendsEvents } from './EventsProvider.js'
+import { EventWeather } from './EventWeather.js'
 
 export const FriendEventsList = () => {
     //get the events of the users friends
@@ -14,7 +15,9 @@ export const FriendEventsList = () => {
             <h3>Friends Events</h3>
             ${friendsEvents.map(event => {
                 return FriendEvent(event)
-            })}
+            }).sort().join("")}
         `
+        //render weather for the friends events
+        EventWeather(friendsEvents)
     })
 }
