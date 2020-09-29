@@ -37,7 +37,10 @@ export const renderArticlesInitial = () => {
                 const articles = useFriendArticles()
                 renderFriendArticles(articles)
             })
-        }
+            } else {
+                const articleFriendTarget = document.querySelector(".friend-articles-list")
+                articleFriendTarget.innerHTML = `<h2>Friend Articles</h2>`
+            }
     })
 }
 
@@ -219,7 +222,7 @@ eventHub2.addEventListener("friendStateChanged", event => {
         //erases the remaining articles if you have no friends
         else{
             const articleFriendTarget = document.querySelector(".friend-articles-list")
-            articleFriendTarget.innerHTML = ""
+            articleFriendTarget.innerHTML = "<h2>Friend Articles</h2>"
         }
     })
 })
