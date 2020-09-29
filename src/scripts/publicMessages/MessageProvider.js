@@ -20,6 +20,7 @@ export const getPublicMessages = () => {
 
 // Insert new messages into the database
 export const savePublicMessage = message => {
+    debugger
     return fetch("http://localhost:8088/messages", {
         method: "POST",
         headers: {

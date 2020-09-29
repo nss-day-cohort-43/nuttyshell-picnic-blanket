@@ -3,7 +3,6 @@
     display: flex;
     flex-direction: column;
     background-color: whitesmoke;
-    border: black solid 2px;
     padding: 10px;
 }
 
