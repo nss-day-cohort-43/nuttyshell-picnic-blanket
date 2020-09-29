@@ -19,6 +19,7 @@ const render = () => {
                 return Event(event)
             }).sort().join("")}
         `
+        //add next-event class to next chronological event
         const nextEvent = document.querySelector(".event-card")
         if(nextEvent){
             nextEvent.classList.add("next-event")
