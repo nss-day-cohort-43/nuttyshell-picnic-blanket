@@ -1,4 +1,5 @@
 import defaultExport from "../Settings.js"
+import { getFriends, useFriends } from '../friends/FriendProvider.js'
 
 //variable that holds the events
 let events = []
@@ -6,6 +7,10 @@ let events = []
 let temp = 0
 //variable to hold current temp at an event location
 let currentTemp = 0
+//variable to store friends events
+let friendsEvents = []
+//variable to hold users
+let users = []
 
 //fetch events from the database using the current userId
 export const getEvents = () => {
@@ -110,4 +115,34 @@ export const editEvent = (event) => {
     })
     .then(getEvents)
     .then(dispatchEventChangeEvent)
+}
+
+//fetch array of current users friends events
+export const getFriendsEvents = () => {
+    return fetch(`http://localhost:8088/users?_embed=events&_embed=friends`)
+    .then(response => response.json())
+    .then(parsedResponse => {
+        users = parsedResponse
+    })
+    .then(getFriends)
+    .then(_ => {
+        debugger;
+        const friendsIds = useFriends().map(friend => {
+            return friend.userId
+        })
+        const friendsUsers = users.filter(user => {
+            return friendsIds.includes(user.id)
+        })
+        friendsUsers.forEach(user => {
+            user.events.forEach(event => {
+                friendsEvents.push(event)
+            })
+        })
+    })
+}
+
+
+//return copy of friendsEvents
+export const useFriendsEvents = () => {
+    return friendsEvents.slice()
 }
