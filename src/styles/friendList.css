@@ -15,10 +15,6 @@
     text-align: center;
 }
 
-.myFriendsTitle {
-    margin: 5px auto;
-}
-
 .friendList-item { 
     display: flex;
     justify-content: space-between;

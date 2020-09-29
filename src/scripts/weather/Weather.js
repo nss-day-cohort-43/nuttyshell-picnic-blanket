@@ -29,7 +29,7 @@ export const renderWeatherInitial = () => {
 const render = (weatherObj) => {
     const weatherTarget = document.querySelector(".current-weather")
     weatherTarget.innerHTML =`
-        <h3>Current Weather</h3>
+        <h3 class="weatherHeader">Current Weather</h3>
         <div class="weather-description">${weatherObj.weather[0].main}</div>
         <div class="weather-temp">Temperature: ${weatherObj.main.temp} °F</div>
         <div class="weather-feeling">Feels Like: ${weatherObj.main.feels_like} °F</div>  

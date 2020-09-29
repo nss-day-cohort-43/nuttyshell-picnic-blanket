@@ -24,6 +24,7 @@ eventHub.addEventListener("click", event => {
             }
             //Send the object to the database
             savePublicMessage(message)
+            .then(document.querySelector("#newPublicMessage").value = "")
         } 
         else {
             if (newMessage.startsWith("@") === true) {
