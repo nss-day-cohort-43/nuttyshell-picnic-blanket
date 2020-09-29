@@ -1,5 +1,5 @@
 import {deletePublicMessage, editPublicMessage, usePublicMessages} from './MessageProvider.js'
-import {publicMessagesStarter} from './MessageBox.js' 
+import {publicMessagesStarter, messagesRender} from './MessageBox.js' 
 
 const eventHub = document.querySelector(".container")
 
@@ -51,10 +51,12 @@ eventHub.addEventListener("click", event => {
             if (isClicked === "editMessageSave"){
                 const [prefix, messageID] = event.target.id.split("-")
                 editBuilder(messageID)
+                document.querySelector(".composePublicMessage-edit").innerHTML = ""
             }
             else {
                 if (isClicked === "editCancel") {
-                    publicMessagesStarter()
+                    document.querySelector(".composePublicMessage-edit").innerHTML = ""
+                    messagesRender()
                 }
             }
         }
