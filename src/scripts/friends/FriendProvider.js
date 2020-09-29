@@ -6,7 +6,7 @@ let friendship = [];
 
 const eventHub = document.querySelector(".container");
 // Let the applicaiton know the friend object state was changed
-const dispatchFriendStateChangeEvent = () => {
+export const dispatchFriendStateChangeEvent = () => {
     const friendStateChangedEvent = new CustomEvent("friendStateChanged")
 
     eventHub.dispatchEvent(friendStateChangedEvent)

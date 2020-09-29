@@ -10,7 +10,7 @@ export const Nutshell = () => {
     // Render all your UI components here
 
     //render the event list
-    EventList();
+    EventList()
     //like renderTasks, renderArticles, renderEvents, etc
     //import render for all components here
     renderFriendsInitial()
@@ -18,4 +18,6 @@ export const Nutshell = () => {
     publicMessagesStarter()
     renderTasksInitial()
     renderArticlesInitial()
+
+    
 }

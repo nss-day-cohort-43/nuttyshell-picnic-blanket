@@ -1,5 +1,7 @@
 import {deletePublicMessage, editPublicMessage, usePublicMessages} from './MessageProvider.js'
-import {publicMessagesStarter} from './MessageBox.js' 
+import {publicMessagesStarter, publicMessageUsername, isUserUnfamiliar} from './MessageBox.js' 
+// import { getFriends, useFriends } from '../friends/FriendProvider.js'
+
 
 const eventHub = document.querySelector(".container")
 
@@ -96,7 +98,7 @@ const editPrep = (messageID) => {
     // Create the HTML area
     contentTarget.innerHTML += `
         <div class="editPublicMessage" id="editPublicMessage-${messageID}">
-            <input id="edit-message-input" type="text" value="${matchingMessage.message}">
+            <input id="edit-message-input" type="text" value=" ${matchingMessage.message}">
             <div class="editMessageSave" id="editMessageSave-${messageID}">💾</div>
             <div class="editCancel">❌</div>
             
@@ -104,20 +106,38 @@ const editPrep = (messageID) => {
         `
 }
 
-// Return the HTML to be rendered for others individual messages
+// const fetchFriends = () => {
+//     getFriends()
+//     .then(
+//         friendsArray = useFriends()
+//     )
+// }
+
+// Return the HTML to be rendered for others' individual messages
 export const othersMessageWriter = message => {
-    return `<div class="public-message" id="public-message-${message.id}">${message.user.username}: ${message.message}</div>`
+    return `<div class="public-message" id="public-message-${message.id}">
+                <div class="public-message-usernameAndContent">
+                    <div class="public-message-username">
+                        ${publicMessageUsername(message.user)}
+                    </div>
+                    <p class="public-message-content"> ${message.message}
+                </div>
+            </div>
+    `
 }
 
 // Return the HTML to be rendered for users individual messages
 export const myMessageWriter = message => {
     return `<div class="public-message" id="public-message-${message.id}">
-                ${message.user.username}: <div id="public-message-content-${message.id}">${message.message}</div>
-                <div class="public-message-edit" id="editPublicMessage-${message.id}">
-                    ✏️
-                </div>
-                <div class="public-message-delete" id="deletePublicMessage-${message.id}">
-                    ❌
+                ${message.user.username}: 
+                <div id="public-message-content-${message.id}">${message.message}</div>
+                <div class="public-message-actions">
+                    <div class="public-message-edit" id="editPublicMessage-${message.id}">
+                        ✏️
+                    </div>
+                    <div class="public-message-delete" id="deletePublicMessage-${message.id}">
+                        ❌
+                    </div>
                 </div>
             </div>
     `
