@@ -10,6 +10,8 @@ export const Event = (event) => {
             <div id="event-location-${event.id}">Location: ${event.eventCity}, ${event.eventState} ${event.eventZip}</div>
             <button type="button" id="delete-event-${event.id}">Delete</button>
             <button type="button" id="edit-event-${event.id}">Edit</button>
+            <button type="button" id="event-weather-btn-${event.id}">Show Weather</button>
+            <div class="event-weather-container no-display" id="event-weather-${event.id}"></div>
         </div>
         <form id="event-edit-form-${event.id}" class="event-edit-form no-display">
         </form>
