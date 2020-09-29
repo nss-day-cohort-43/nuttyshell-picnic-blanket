@@ -56,7 +56,7 @@ export const deleteArticle = articleId => {
 
 //saves an article edit to the api
 export const editArticle = (articleObj, articleId) => {
-    return fetch(`http://localhost:8088/tasks/${articleId}`, {
+    return fetch(`http://localhost:8088/articles/${articleId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json"
