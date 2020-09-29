@@ -9,7 +9,7 @@ export const EventWeather = (events) => {
         const currentDate = new Date()
         const currentDateDays = Math.floor(currentDate.getTime()/ (1000*60*60*24))
         //check that the event date is within 5 days of the current date and not in the past
-        if(eventDate - currentDateDays <= 5 && eventDate - currentDate >= 0){
+        if(eventDate - currentDateDays <= 5 && eventDate - currentDateDays >= 0){
             //if the event is within 5 days, get the temperature for that day
             getEventWeather(event)
             .then(_ => {
