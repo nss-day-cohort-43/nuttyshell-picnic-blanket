@@ -98,3 +98,16 @@ export const useEventCurrentWeather = () => {
 export const useEventWeather = () => {
     return temp
 }
+
+//edit a given event, update the events array, and dispatch custom event
+export const editEvent = (event) => {
+    return fetch(`http://localhost:8088/events/${event.id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(event)
+    })
+    .then(getEvents)
+    .then(dispatchEventChangeEvent)
+}
