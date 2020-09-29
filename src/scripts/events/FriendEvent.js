@@ -7,6 +7,8 @@ export const FriendEvent = (event) => {
             <h4 id="event-owner-${event.id}">Owner: ${event.user.username}</h4>
             <div id="event-date-${event.id}">Date: ${event.startDate}</div>
             <div id="event-location-${event.id}">Location: ${event.eventCity}, ${event.eventState} ${event.eventZip}</div>
+            <button type="button" id="event-weather-btn-${event.id}">Show Weather</button>
+            <div class="event-weather-container no-display" id="event-weather-${event.id}"></div>
         </div>
     `
 }
