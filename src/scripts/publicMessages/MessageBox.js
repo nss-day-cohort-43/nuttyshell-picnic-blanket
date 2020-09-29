@@ -1,5 +1,5 @@
 import {getPublicMessages, usePublicMessages, savePublicMessage} from './MessageProvider.js'
-import {myMessageWriter, othersMessageWriter} from './Message.js'
+import {messageWriter} from './Message.js'
 
 const eventHub = document.querySelector(".container")
 
@@ -45,24 +45,27 @@ export const publicMessagesStarter = () => {
 }
 
 //Place each individual message into the box reserved for public messages
-const messagesRender = () => {
+async function messagesRender() {
     //Fetch updated messages and then only continue when that step has completed
-    getPublicMessages()
-    .then(() => {
-        //Get an array of fetched messages to use
-        const messages = usePublicMessages()
-        //Set the destination for where individual messages should be rendered
-        const contentTarget = document.querySelector(".rendered-public-messages")
-        //For each message in our array, write HTML using the data from it
-        const showMessages = messages.map((message) => {
-            //If message was created by logged in user, use this code which allows deleting
-            if (message.userId === parseInt(sessionStorage.getItem("activeUser"))) {
-                contentTarget.innerHTML += myMessageWriter(message)
-            }
-            //If message was NOT created by logged in user, use this code
-            else {
-                contentTarget.innerHTML += othersMessageWriter(message)
-            }
-        })
+    
+    //Get an array of fetched messages to use
+    let messages = await getPublicMessages()
+    //Set the destination for where individual messages should be rendered
+    const contentTarget = document.querySelector(".rendered-public-messages")
+    //For each message in our array, write HTML using the data from it
+    const showMessages = async () => {
+        return Promise.all(messages.map(messageObj => messageWriter(messageObj)))
+    }
+    showMessages().then(result => {
+        contentTarget.innerHTML = result.join("")
     })
+    
+}
+
+//fetches, renders, and reconnects every second to simulate real time chat
+export async function chatFeed() {
+    await getPublicMessages();
+      messagesRender()
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      await chatFeed();
 }
