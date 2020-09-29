@@ -27,17 +27,27 @@ header {
     width: 100%;
     padding-bottom: 1px;
     display:flex;
-    justify-content: space-between;
+    flex-direction: row;
 }
 
 .title {
     margin: 0;
+    align-self: center;
+}
+
+.logo-and-title {
+    display:flex;
+    flex-direction: row;
 }
 
 .currentWeather {
     padding-right: 2em;
 }
 
+.logo {
+    height: 90px;
+    width: auto;
+}
 
 
 /* ----------------- Main body content ----------------- */

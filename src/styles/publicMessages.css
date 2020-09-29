@@ -14,6 +14,7 @@
     margin-top: 0.25em;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .public-message-delete {
