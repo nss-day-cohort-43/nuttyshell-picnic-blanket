@@ -60,3 +60,9 @@ eventHub.addEventListener('eventStateChanged', event => {
     //render the eventlist
     render()
 })
+
+//listen for if the friend state has changed
+eventHub.addEventListener('friendStateChanged', event => {
+    //render the friends event list
+    FriendEventsList()
+})
