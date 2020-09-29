@@ -56,13 +56,13 @@ async function messagesRender() {
     const showMessages = async () => {
         return Promise.all(messages.map(messageObj => messageWriter(messageObj)))
     }
-
     showMessages().then(result => {
         contentTarget.innerHTML = result.join("")
     })
     
 }
 
+//fetches, renders, and reconnects every second to simulate real time chat
 export async function chatFeed() {
     await getPublicMessages();
       messagesRender()
