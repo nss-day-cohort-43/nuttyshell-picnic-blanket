@@ -105,11 +105,11 @@ eventHub.addEventListener("click", event => {
         toggleAddFriendForm(); // open or close the add friend form when "add new friend" button is pressed
     }
     else if(event.target.id.startsWith("deleteFriend-btn--")){
-        const [prefix, id, tacoId] = event.target.id.split("--");
+        const [prefix, id, friendUserId] = event.target.id.split("--");
         //deletes relationship 1 to 2
         deleteFriend(id)
         //deletes relationship 2 to 1
-        getFriendship(tacoId)
+        getFriendship(friendUserId)
         .then(()=> {
             const relationship = useFriendship()
             const relationshipId = relationship.id
@@ -138,7 +138,6 @@ eventHub.addEventListener("click", event => {
 
                     // Is username entered = any of current user's existing friends?
                     if(friendsArray.find(friend => friend.user.username === targetUser.username)){
-                        console.log("Error: Already friends with this person");
                         warningTarget.innerHTML = `You and this person are already friends!`;
                     }
                     else{
@@ -154,13 +153,13 @@ eventHub.addEventListener("click", event => {
                         // "id" of each friend object is auto-updated upon POST
                         const friendship_currentUserToFriend = {
                             userId: parseInt(userId),
-                            tacoId: targetUser.id,
+                            friendUserId: targetUser.id,
                             accepted: true
                         };
 
                         const friendship_friendToCurrentUser = {
                             userId: targetUser.id,
-                            tacoId: parseInt(userId),
+                            friendUserId: parseInt(userId),
                             accepted: true
                         };
 
@@ -177,16 +176,12 @@ eventHub.addEventListener("click", event => {
             }
             // If an invalid username was entered, display warning and keep input
             else if(!targetUser){
-                console.log("Username is invalid, 1", trimmedInput);
                 warningTarget.innerHTML = `${trimmedInput} is not a valid username`;
             }
         }
         // If no username entered, show warning of empty input
         else {
-            console.log("Username is blank, 2", trimmedInput);
-            inputUsername.input = ""; // clear input
             inputUsername.value = ""; // clear input
-            inputUsername.textContent = ""; // clear input
             warningTarget.innerHTML = `Please type another user's username`;
 
         }
