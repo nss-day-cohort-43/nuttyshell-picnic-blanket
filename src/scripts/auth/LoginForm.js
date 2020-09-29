@@ -53,3 +53,9 @@ const render = () => {
 export const LoginForm = () => {
     render()
 }
+
+eventHub.addEventListener("userAuthenticated", e => {
+    //if a user is authenticated, remove any code from the current content target
+    //this provides free space for the dashboard to render
+    contentTarget.setAttribute("style", "display: none;")
+})
