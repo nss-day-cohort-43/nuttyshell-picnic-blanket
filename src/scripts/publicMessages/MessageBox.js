@@ -10,7 +10,9 @@ let allUsers = [];
 
 //Listen for the send message button to be clicked
 eventHub.addEventListener("click", event => {
-    const isClicked = event.target.classList.value
+    const isClicked = event.target.classList.value;
+    console.log("isClicked:", isClicked);
+    console.log("target.id: ", event.target.id);
     if (isClicked === "postPublicMessageBtn") {
         const newMessage = document.querySelector("#newPublicMessage").value
         //Create the obeject to be sent to the database
@@ -26,15 +28,16 @@ eventHub.addEventListener("click", event => {
         savePublicMessage(message)
     }
     // Listen for click to open dropdown menu for adding a user as a friend from public messages
-    else if(event.target.id.startsWith("clickableUsername")){
+    else if(event.target.id.startsWith("save-friend-from-message-btn")){
         const [prefix, id] = event.target.id.split("--"); // capture the id of the other username
         console.log("prefix: ", prefix);
         console.log("id: ", id);
-        toggleRenderAddFriendDropdown(id);
-    }
-    // Listen for click of "Add Friend" button from dropdown
-    else if(event.target.id === "save-friend-from-message-btn"){
-        const userToFriend = allUsers.find(user => user.id == id); 
+        console.log("allUsers: ", allUsers)
+        //toggleRenderAddFriendDropdown(id);
+        const userToFriend = allUsers.find(user => {
+            return user.id == id
+        }); 
+        console.log(userToFriend);
         // find the user in the list of all users with the same ID as the id on the public message
 
         // create the friendship between active user and userToFriend
@@ -52,7 +55,7 @@ eventHub.addEventListener("click", event => {
 
         saveFriend(friendship_currentUserToOtherUser);     // save new friend
         saveFriend(friendship_otherUserToCurrentUser);     // save new friend
-        toggleRenderAddFriendDropdown(userToFriend.id)                  // close addFriend form
+        toggleRenderAddFriendDropdown(userToFriend.id)     // close addFriend form
     
     }
 })
@@ -96,6 +99,7 @@ const fetchValidUsers = () => {
 
 //Place each individual message into the box reserved for public messages
 const messagesRender = () => {
+    console.log("Rendering Messages");
     // Fetch updated friends
     //fetchFriends()
     //fetchValidUsers()
@@ -106,6 +110,7 @@ const messagesRender = () => {
         const messages = usePublicMessages()
         //Set the destination for where individual messages should be rendered
         const contentTarget = document.querySelector(".rendered-public-messages")
+        contentTarget.innerHTML = ""; // clear any leftover things.
         //For each message in our array, write HTML using the data from it
         const showMessages = messages.map((message) => {
             //If message was created by logged in user, use this code which allows deleting
@@ -117,9 +122,9 @@ const messagesRender = () => {
                 contentTarget.innerHTML += othersMessageWriter(message)
             }
         })
+        console.log("showMessages: ", showMessages);
     })
 }
-
 
 
 // --------- adding a friend by message ---------- 
@@ -127,34 +132,52 @@ export const publicMessageUsername = (otherUser) => {
     if(isUserUnfamiliar(otherUser)){
         // If the other username is unfamiliar, return ClickableUsername
         return `
-            <button type="button" class="dropbtn-addFriendByUsername" id="clickableUsername--${otherUser.id}"><strong>${otherUser.username}</strong></button>
-            <div id="dropdown-for-user--${otherUser.id} class="dropdown-content">
-                <button type="button" id="save-friend-from-message-btn">Add Friend</button>
+            <h5 class="public-message-username" id="normalUsername--${otherUser.id}">${otherUser.username}</h5>
+            <div class="addNewFriendFromMessage">
+                <button type="button" class="addFriendBtn show" id="save-friend-from-message-btn--${otherUser.id}">+</button>
             </div>
         `          
     }
     else{
-        return `<p class="public-message-username normalUsername--${otherUser.id}"><strong>${otherUser.username}</strong></p>`
+        return `
+            <h5 class="public-message-username" id="normalUsername--${otherUser.id}">${otherUser.username}</h5>
+        `
     }
 }
 
 export const isUserUnfamiliar = (targetUser) => {
+    console.log(targetUser);
+    if(!targetUser.id == userId){
     // targetUser is the specifc username belonging to a public chat message
     // Is the username the same as any of active user's existing friends?
-    const isFriend = friendsArray.find(friend => friend.user.username === targetUser.username)
-    if(!isFriend){
-        console.log("Message username is not a friend of active user");
-        // If targetUser is not one of the active user's friends, return true
-        return true;
+        const isFriend = friendsArray.find(friend => friend.user.username === targetUser.username)
+        if(!isFriend){
+            console.log("Message username is not a friend of active user");
+            // If targetUser is not one of the active user's friends, return true
+            return true;
+        }
+        else{
+            console.log("Message username is a friend of active user");
+            return false;
+        }
     }
     else{
-        console.log("Message username is a friend of active user");
+        console.log("Message username is me, active user");
         return false;
     }
 }
 
-
 // This function toggles between showing and hiding the dropdown each time the button is clicked
 const toggleRenderAddFriendDropdown = (otherUserId) => {
-    document.getElementById(`dropdown-for-user--${otherUserId}`).classList.toggle("show");
+    console.log("TOGGGGGGGLE");
+    console.log("otherUser: ", otherUserId);
+    const buttonTarget = document.getElementById(`save-friend-from-message-btn--${otherUserId}`);
+    console.log("buttonTarget: ", buttonTarget)
+    buttonTarget.classList.remove("show");
 }
+
+eventHub.addEventListener("friendStateChanged", event => {
+    // Friend State updated, refresh friends
+    console.log("FRIENDS CHANGED");
+    //toggleRenderAddFriendDropdown()
+})
