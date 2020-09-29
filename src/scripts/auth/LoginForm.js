@@ -4,7 +4,7 @@ const eventHub = document.querySelector(".container")
 eventHub.addEventListener("userAuthenticated", e => {
     // If a user is authenticated, remove any code from the current content target
     // This provides free space for the dashboard to render
-    contentTarget.innerHTML = ""
+    contentTarget.classList.add("hidden");
 })
 
 eventHub.addEventListener("click", e => {
