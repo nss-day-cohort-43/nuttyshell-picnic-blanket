@@ -5,14 +5,13 @@ import { deleteEvent } from './EventsProvider.js'
 export const Event = (event) => {
     return `
         <div id="${event.startDate}--${event.id}" class="event-card event-card-${event.id}">
-            <h3>${event.name}</h3>
-            <div>Date: ${event.startDate}</div>
-            <div>Location: ${event.eventCity}, ${event.eventState}</div>
+            <h3 id="event-name-${event.id}">${event.name}</h3>
+            <div id="event-date-${event.id}">Date: ${event.startDate}</div>
+            <div id="event-location-${event.id}">Location: ${event.eventCity}, ${event.eventState} ${event.eventZip}</div>
             <button type="button" id="delete-event-${event.id}">Delete</button>
             <button type="button" id="edit-event-${event.id}">Edit</button>
         </div>
         <form id="event-edit-form-${event.id}" class="event-edit-form no-display">
-            ${EventEditForm(event)}
         </form>
     `
 }
@@ -66,6 +65,9 @@ eventHub.addEventListener('click', event => {
 
         //either hide the event card or the event form
         if(editForm.classList.contains('no-display')){
+            //render the actual form with default vaules
+            editForm.innerHTML = EventEditForm(eventId)
+            //display the form and hide the event card
             editForm.classList.remove('no-display')
             eventCard.classList.add('no-display')
         }

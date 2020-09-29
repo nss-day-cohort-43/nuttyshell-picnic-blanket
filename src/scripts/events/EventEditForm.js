@@ -1,20 +1,28 @@
 import { editEvent } from './EventsProvider.js'
 
 //render the event edit form
-export const EventEditForm = (event) => {
+export const EventEditForm = (eventId) => {
+
+    //grab all the default values for the form
+    const name = document.querySelector(`#event-name-${eventId}`).innerHTML
+    const date = document.querySelector(`#event-date-${eventId}`).innerHTML.split(" ")[1]
+    const [prefix, cityComma, state, zip] = document.querySelector(`#event-location-${eventId}`).innerHTML.split(" ")
+    const city = cityComma.split(",")[0]
+
+    //return the html for the event edit form
     return `
         <label for="title">Title:</label><br>
-        <input type="text" id="event-edit-form-title-${event.id}" name="title" value="${event.name}"><br>
+        <input type="text" id="event-edit-form-title-${eventId}" name="title" value="${name}"><br>
         <label for="date">Date:</label><br>
-        <input type="date" id="event-edit-form-date-${event.id}" name="date" value="${event.startDate}"><br>
+        <input type="date" id="event-edit-form-date-${eventId}" name="date" value="${date}"><br>
         <label for="city">City:</label><br>
-        <input type="text" id="event-edit-form-city-${event.id}" name="city" value="${event.eventCity}"><br>
+        <input type="text" id="event-edit-form-city-${eventId}" name="city" value="${city}"><br>
         <label for="state">State:</label><br>
-        <input type="text" id="event-edit-form-state-${event.id}" name="state" value="${event.eventState}"><br>
+        <input type="text" id="event-edit-form-state-${eventId}" name="state" value="${state}"><br>
         <label for="zip">Zipcode:</label><br>
-        <input type="text" id="event-edit-form-zip-${event.id}" name="zip" value="${event.eventZip}"><br>
-        <button type="button" id="event-edit-form-submit-${event.id}">Update Event</button>
-        <button type="button" id="event-edit-form-cancel-${event.id}">Cancel</button>
+        <input type="text" id="event-edit-form-zip-${eventId}" name="zip" value="${zip}"><br>
+        <button type="button" id="event-edit-form-submit-${eventId}">Update Event</button>
+        <button type="button" id="event-edit-form-cancel-${eventId}">Cancel</button>
     `
 }
 
