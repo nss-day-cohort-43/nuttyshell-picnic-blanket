@@ -17,7 +17,7 @@ export const EventWeather = (events) => {
                 const temp = useEventWeather()
                 const eventCard = document.getElementById(`${event.startDate}--${event.id}`)
                 eventCard.innerHTML += `<button type="button" id="event-weather-btn-${event.id}">Show Weather</button>
-                                        <div class="event-weather-container hidden" id="event-weather-${event.id}">${temp}&#730;F</div>
+                                        <div class="event-weather-container no-display" id="event-weather-${event.id}">${temp}&#730;F</div>
                 `
             })
         }
@@ -28,7 +28,7 @@ export const EventWeather = (events) => {
                 const temp = useEventCurrentWeather()
                 const eventCard = document.getElementById(`${event.startDate}--${event.id}`)
                 eventCard.innerHTML += `<button type="button" id="event-weather-btn-${event.id}">Show Weather</button>
-                                    <div class="event-weather-container hidden" id="event-weather-${event.id}">Unable to show weather of date.  Current Weather: ${temp}&#730;F</div>
+                                    <div class="event-weather-container no-display" id="event-weather-${event.id}">Unable to show weather of date.  Current Weather: ${temp}&#730;F</div>
                 `
             })
         }
