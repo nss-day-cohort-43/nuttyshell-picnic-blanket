@@ -14,6 +14,7 @@ export const getPublicMessages = () => {
         .then(response => response.json())
         .then(parsedNotes => {
             publicMessages = parsedNotes
+            return publicMessages
         })
 }
 

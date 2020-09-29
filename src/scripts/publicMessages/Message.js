@@ -104,21 +104,21 @@ const editPrep = (messageID) => {
         `
 }
 
-// Return the HTML to be rendered for others individual messages
-export const othersMessageWriter = message => {
-    return `<div class="public-message" id="public-message-${message.id}">${message.user.username}: ${message.message}</div>`
-}
-
 // Return the HTML to be rendered for users individual messages
-export const myMessageWriter = message => {
-    return `<div class="public-message" id="public-message-${message.id}">
-                ${message.user.username}: <div id="public-message-content-${message.id}">${message.message}</div>
-                <div class="public-message-edit" id="editPublicMessage-${message.id}">
-                    ✏️
+export async function messageWriter (message) {
+    if (message.userId === parseInt(sessionStorage.getItem("activeUser"))) {
+        return `<div class="public-message" id="public-message-${message.id}">
+                    ${message.user.username}: <div id="public-message-content-${message.id}">${message.message}</div>
+                    <div class="public-message-edit" id="editPublicMessage-${message.id}">
+                        ✏️
+                    </div>
+                    <div class="public-message-delete" id="deletePublicMessage-${message.id}">
+                        ❌
+                    </div>
                 </div>
-                <div class="public-message-delete" id="deletePublicMessage-${message.id}">
-                    ❌
-                </div>
-            </div>
-    `
+        `
+    } else {
+        return `<div class="public-message" id="public-message-${message.id}">${message.user.username}: ${message.message}</div>`
+    }
+
 }
