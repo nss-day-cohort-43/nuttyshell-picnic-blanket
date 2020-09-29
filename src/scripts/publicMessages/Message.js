@@ -87,7 +87,7 @@ const editPrep = (messageID) => {
         return message.id === parseInt(messageID)
     })
     // Declare where our HTML will be injected
-    const contentTarget = document.querySelector(`#public-message-content-${messageID}`)
+    const contentTarget = document.querySelector(`.composePublicMessage-edit`)
     // Ensure only one message is edited at a time by checking to see if a message is currently being edited
     if (contentTarget) {
         // If a message is being edited, clear that so the new one can be edited instead
