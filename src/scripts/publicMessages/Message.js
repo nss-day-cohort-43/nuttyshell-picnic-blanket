@@ -108,7 +108,7 @@ const editPrep = (messageID) => {
 export async function messageWriter (message) {
     if (message.userId === parseInt(sessionStorage.getItem("activeUser"))) {
         return `<div class="public-message" id="public-message-${message.id}">
-                    ${message.user.username}: <div id="public-message-content-${message.id}">${message.message}</div>
+                    ${message.user.username}: <div id="public-message-content-${message.id}">${message.message} - ${message.private}</div>
                     <div class="public-message-edit" id="editPublicMessage-${message.id}">
                         ✏️
                     </div>
@@ -118,7 +118,7 @@ export async function messageWriter (message) {
                 </div>
         `
     } else {
-        return `<div class="public-message" id="public-message-${message.id}">${message.user.username}: ${message.message}</div>`
+        return `<div class="public-message" id="public-message-${message.id}">${message.user.username}: ${message.message} - ${message.private}</div>`
     }
 
 }
