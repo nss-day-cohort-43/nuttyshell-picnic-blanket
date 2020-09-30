@@ -1,4 +1,4 @@
-import { getEventWeather, useEventWeather, getEventCurrentWeather, useEventCurrentWeather } from './EventsProvider.js'
+import { getEventWeather, useEventWeather, getEventCurrentWeather, useEventCurrentWeather,  useEventMaxTemp,  useEventMinTemp, useEventCurrentTemp } from './EventsProvider.js'
 
 
 //renders the weather for all events that it is possible for
@@ -14,18 +14,21 @@ export const EventWeather = (events) => {
             getEventWeather(event)
             .then(_ => {
                 //render the weather using the fetched temperature
-                const temp = useEventWeather()
+                const weather = useEventWeather()
+                const maxTemp = useEventMaxTemp()
+                const minTemp = useEventMinTemp()
                 const eventWeather = document.getElementById(`event-weather-${event.id}`)
-                eventWeather.innerHTML = `${temp}&#730;F`
+                eventWeather.innerHTML = `${weather}<br>${minTemp}&#730;F/${maxTemp}&#730;F`
             })
         }
         //if the event is not within 5 days get its current temp
         else {
             getEventCurrentWeather(event)
             .then(_ => {
-                const temp = useEventCurrentWeather()
+                const weather = useEventCurrentWeather()
+                const temp = useEventCurrentTemp()
                 const eventWeather = document.getElementById(`event-weather-${event.id}`)
-                eventWeather.innerHTML = `Cannot display of temperature at this date.  Current temp: ${temp}&#730;F`
+                eventWeather.innerHTML = `Can only display current weather<br>${weather}<br>${temp}&#730;F`
             })
         }
     })

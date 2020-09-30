@@ -8,14 +8,14 @@ export const FriendEventsList = () => {
     .then(_ => {
         const friendsEvents = useFriendsEvents()
 
-        //set render the friends events list
+        //render the friends events list
         const contentTarget = document.querySelector('.friends-events-list')
         //for each event, create the HTML for that event using FriendEvent()
         contentTarget.innerHTML = `
-            <h3>Friends Events</h3>
-            ${friendsEvents.map(event => {
-                return FriendEvent(event)
-            }).sort().join("")}
+        <h3>Friends Events</h3>
+        ${friendsEvents.map(event => {
+            return FriendEvent(event)
+        }).sort().join("")}
         `
         //render weather for the friends events
         EventWeather(friendsEvents)
