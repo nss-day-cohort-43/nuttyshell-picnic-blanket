@@ -72,5 +72,21 @@ eventHub.addEventListener('click', event => {
         //render the event form and hide the display form button
         EventForm()
         event.target.classList.add('no-display')
+
+        //hide all edit event forms that are not already hidden
+        const allEditForms = document.getElementsByClassName('event-edit-form')
+        for(var i = 0; i < allEditForms.length; i++){
+            if(!(allEditForms[i].classList.contains('no-display'))){
+                allEditForms[i].classList.add('no-display')
+            }
+        }
+
+        //make sure all event cards are showing
+        const allEventCards = document.getElementsByClassName('event-card')
+        for(var i = 0; i < allEventCards.length; i++){
+            if(allEventCards[i].classList.contains('no-display')){
+                allEventCards[i].classList.remove('no-display')
+            }
+        }
     }
 })
