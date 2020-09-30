@@ -52,15 +52,27 @@ eventHub.addEventListener('click', event => {
         //hide all other edit event forms that are not already hidden
         const allEditForms = document.getElementsByClassName('event-edit-form')
         for(var i = 0; i < allEditForms.length; i++){
-            if(allEditForms[i].id != editForm.id && !(allEditForms[i].classList.contains('no-display'))){
+            if(allEditForms[i].id !== editForm.id && !(allEditForms[i].classList.contains('no-display'))){
                 allEditForms[i].classList.add('no-display')
             }
+        }
+
+        //get rid of event form if rendered
+        const eventForm = document.querySelector('.events-form')
+        if(eventForm.innerHTML !== ""){
+            eventForm.innerHTML = ""
+        }
+
+        //display event form display button if hidden
+        const eventFormBtn = document.querySelector('#event-form-display-button')
+        if(eventFormBtn.classList.contains('no-display')){
+            eventFormBtn.classList.remove('no-display')
         }
 
         //make sure all other event cards are showing
         const allEventCards = document.getElementsByClassName('event-card')
         for(var i = 0; i < allEventCards.length; i++){
-            if(allEventCards[i].id != editForm.id && allEventCards[i].classList.contains('no-display')){
+            if(allEventCards[i].id !== eventCard.id && allEventCards[i].classList.contains('no-display')){
                 allEventCards[i].classList.remove('no-display')
             }
         }

@@ -35,17 +35,16 @@ export const EventList = () => {
     //set up html elements for rendering
     dashboard.innerHTML += `
         <div class="events-container">
-            <div class="myEvents">
-                <h2>Your Events</h2>
-                <form class="events-form"></form>
-                <div class="events-list"></div>
+            <h2>My Events</h2>
+            <button type="button" id="event-form-display-button">Add new event</button>
+            <form class="events-form">
+            </form>
+            <div class="events-list">
             </div>
             <div class="friends-events-list">
             </div>
         </div>
     `
-    //render the eventForm
-    EventForm();
     //render the list of friends events
     FriendEventsList()
     //render the event list
@@ -64,4 +63,30 @@ eventHub.addEventListener('eventStateChanged', event => {
 eventHub.addEventListener('friendStateChanged', event => {
     //render the friends event list
     FriendEventsList()
+})
+
+//listen for click event
+eventHub.addEventListener('click', event => {
+    //check that the event form button was clicked
+    if(event.target.id === "event-form-display-button"){
+        //render the event form and hide the display form button
+        EventForm()
+        event.target.classList.add('no-display')
+
+        //hide all edit event forms that are not already hidden
+        const allEditForms = document.getElementsByClassName('event-edit-form')
+        for(var i = 0; i < allEditForms.length; i++){
+            if(!(allEditForms[i].classList.contains('no-display'))){
+                allEditForms[i].classList.add('no-display')
+            }
+        }
+
+        //make sure all event cards are showing
+        const allEventCards = document.getElementsByClassName('event-card')
+        for(var i = 0; i < allEventCards.length; i++){
+            if(allEventCards[i].classList.contains('no-display')){
+                allEventCards[i].classList.remove('no-display')
+            }
+        }
+    }
 })

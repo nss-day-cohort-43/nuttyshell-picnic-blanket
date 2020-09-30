@@ -3,10 +3,16 @@ import { getFriends, useFriends } from '../friends/FriendProvider.js'
 
 //variable that holds the events
 let events = []
-//variable to hold the temperature of an event
-let temp = 0
+//variable to hold the max temperature of the day of an event
+let maxTemp = 0
+//variable to hold the min tempaerature of the day of an event
+let minTemp = 0
+//variable to hold the weather
+let weather = ""
 //variable to hold current temp at an event location
 let currentTemp = 0
+//variable to hold current weather at an event location
+let currentWeather = ""
 //variable to store friends events
 let friendsEvents = []
 //variable that holds events with expanded users
@@ -68,17 +74,24 @@ export const getEventWeather = (event) => {
         const viableForecasts = forecasts.filter(forecast => {
             return forecast.dt_txt.includes(event.startDate)
         })
-        //if there are forecasts for the event date, get the max temp for that day
+        //if there are forecasts for the event date, get the max and min temp for that day
         if(viableForecasts.length !== 0){
             const temps = viableForecasts.map(forecast => {
                 return forecast.main.temp
             })
-            const maxTemp = Math.max(...temps)
-            temp = maxTemp
+            maxTemp = Math.max(...temps)
+            minTemp = Math.min(...temps)
+
+            const noonForecast = viableForecasts.find(forecast => {
+                return forecast.dt_txt.includes("12:00:00")
+            })
+            weather = noonForecast.weather[0].description
         }
         //if there are no forecasts for the event date, set temp to 0
         else{
-            temp = 0
+            maxTemp = 0
+            minTemp = 0
+            weather = ""
         }
     })
 }
@@ -90,18 +103,33 @@ export const getEventCurrentWeather = (event) => {
     .then(
         parsedWeather => {
             currentTemp = parsedWeather.main.temp
+            currentWeather = parsedWeather.weather[0].description
         }
     )
 }
 
-//return the value of currentTemp
+//return the value of currentWeather
 export const useEventCurrentWeather = () => {
+    return currentWeather
+}
+
+//return the value of currentWeather
+export const useEventCurrentTemp = () => {
     return currentTemp
 }
 
-//return the stored temp
+//return the stored weather
 export const useEventWeather = () => {
-    return temp
+    return weather
+}
+
+//return the stored maxTemp
+export const useEventMaxTemp = () => {
+    return maxTemp
+}
+
+export const useEventMinTemp = () => {
+    return minTemp
 }
 
 //edit a given event, update the events array, and dispatch custom event

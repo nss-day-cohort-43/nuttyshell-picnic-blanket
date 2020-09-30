@@ -15,6 +15,7 @@ const render = () => {
         <label for="zip">Zipcode:</label><br>
         <input type="text" id="event-form-zip" name="zip"><br>
         <button type="button" id="event-form-submit">Save Event</button>
+        <button type="button" id="event-form-hide">Cancel</button>
     `
 }
 
@@ -63,7 +64,15 @@ eventHub.addEventListener("click", event => {
         else{
             window.alert("Please fill out all fields")
         }
-        
+    }
+    //check if the hide button was clicked
+    else if(event.target.id === "event-form-hide"){
+        //empty the html of event form
+        const contentTarget = document.querySelector('.events-form')
+        contentTarget.innerHTML = ""
 
+        //display the event form button
+        const eventFormDisplay = document.querySelector('#event-form-display-button')
+        eventFormDisplay.classList.remove('no-display')
     }
 })
