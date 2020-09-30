@@ -15,7 +15,6 @@ const render = () => {
         const contentElement = document.querySelector('.events-list')
         //call Event() for each event object to create the html
         contentElement.innerHTML = `
-            <h2>Events</h2>
             ${events.map(event => {
                 return Event(event)
             }).sort().join("")}
@@ -36,7 +35,8 @@ export const EventList = () => {
     //set up html elements for rendering
     dashboard.innerHTML += `
         <div class="events-container">
-            <h3>New Event</h3>
+            <h2>My Events</h2>
+            <button type="button" id="event-form-display-button">Add new event</button>
             <form class="events-form">
             </form>
             <div class="events-list">
@@ -45,8 +45,6 @@ export const EventList = () => {
             </div>
         </div>
     `
-    //render the eventForm
-    EventForm();
     //render the list of friends events
     FriendEventsList()
     //render the event list
@@ -65,4 +63,22 @@ eventHub.addEventListener('eventStateChanged', event => {
 eventHub.addEventListener('friendStateChanged', event => {
     //render the friends event list
     FriendEventsList()
+})
+
+//listen for click event
+eventHub.addEventListener('click', event => {
+    //check that the event form button was clicked
+    if(event.target.id === "event-form-display-button"){
+        //if the event form is currently not rendered, render it and update the button html
+        const eventForm = document.querySelector('.events-form')
+        if(event.target.innerHTML === "Add new event"){
+            EventForm()
+            event.target.innerHTML = "Hide Event Form"
+        }
+        //else, set the html of the event form to blank and update the button html
+        else{
+            eventForm.innerHTML = ""
+            event.target.innerHTML = "Add new event"
+        }
+    }
 })

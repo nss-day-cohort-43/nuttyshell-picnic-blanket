@@ -15,6 +15,7 @@ const render = () => {
         <label for="zip">Zipcode:</label><br>
         <input type="text" id="event-form-zip" name="zip"><br>
         <button type="button" id="event-form-submit">Save Event</button>
+        <button type="button" id="event-form-hide">Hide Event Form</button>
     `
 }
 
