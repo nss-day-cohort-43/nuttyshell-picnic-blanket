@@ -11,9 +11,12 @@ const userId = sessionStorage.getItem("activeUser")
 export const renderArticlesInitial = () => {
     //adds articles container to main container
     eventHub.innerHTML += `<div class="articles">
-        <div class="article-add"></div>
-        <div class="composeArticle-edit"></div>
-        <div class="article-list"></div>
+        <div class="myArticleContainer">
+            <h2>Your Articles</h2>
+            <div class="article-add"></div>
+            <div class="composeArticle-edit"></div>
+            <div class="article-list"></div>
+        </div>
         <div class="friend-articles-list"></div>
     </div>`
     //gets user's articles from api
@@ -34,7 +37,10 @@ export const renderArticlesInitial = () => {
                 const articles = useFriendArticles()
                 renderFriendArticles(articles)
             })
-        }
+            } else {
+                const articleFriendTarget = document.querySelector(".friend-articles-list")
+                articleFriendTarget.innerHTML = `<h2>Friend Articles</h2>`
+            }
     })
 }
 
@@ -188,9 +194,9 @@ export const renderFriendArticles = (articleArray) => {
     //defines content location in which the article list will render
     const articleFriendTarget = document.querySelector(".friend-articles-list")
     //iterates over all articles for the user and HTML list
-    let articleFriendListHTML = articleArray.map(article => {
+    let articleFriendListHTML = `<h2>Friend Articles</h2>${articleArray.map(article => {
         return FriendArticle(article)
-    }).join("<br>")
+    }).join("<br>")}`
     //places article HTML list in content location
     articleFriendTarget.innerHTML = articleFriendListHTML
 }
@@ -216,7 +222,7 @@ eventHub2.addEventListener("friendStateChanged", event => {
         //erases the remaining articles if you have no friends
         else{
             const articleFriendTarget = document.querySelector(".friend-articles-list")
-            articleFriendTarget.innerHTML = ""
+            articleFriendTarget.innerHTML = "<h2>Friend Articles</h2>"
         }
     })
 })

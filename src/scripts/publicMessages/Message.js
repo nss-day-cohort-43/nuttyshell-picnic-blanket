@@ -1,5 +1,5 @@
 import {deletePublicMessage, editPublicMessage, usePublicMessages} from './MessageProvider.js'
-import {publicMessagesStarter} from './MessageBox.js' 
+import {publicMessagesStarter, messagesRender} from './MessageBox.js' 
 
 const eventHub = document.querySelector(".container")
 
@@ -51,10 +51,12 @@ eventHub.addEventListener("click", event => {
             if (isClicked === "editMessageSave"){
                 const [prefix, messageID] = event.target.id.split("-")
                 editBuilder(messageID)
+                document.querySelector(".composePublicMessage-edit").innerHTML = ""
             }
             else {
                 if (isClicked === "editCancel") {
-                    publicMessagesStarter()
+                    document.querySelector(".composePublicMessage-edit").innerHTML = ""
+                    messagesRender()
                 }
             }
         }
@@ -129,13 +131,13 @@ export async function messageWriter (message) {
     else {
         // Render private message for recipients eyes only
         if (message.private === true && message.userReceive === activeUser && message.userId !== activeUser) {
-            return `<div class="public-message" id="public-message-${message.id}">${message.user.username}: ${message.message}</div>`
+            return `<div class="public-message" id="public-message-${message.id}">${message.user.username}: 🤫 ${message.message}</div>`
         }
         else {
             // Render private message for recipients eyes only with abilite to edit
             if (message.private === true && message.userReceive !== activeUser && message.userId === activeUser) {
                 return `<div class="public-message" id="public-message-${message.id}">
-                            ${message.user.username}: <div id="public-message-content-${message.id}">${message.message}</div>
+                            ${message.user.username}: <div id="public-message-content-${message.id}"> 🤫 ${message.message}</div>
                             <div class="public-message-edit" id="editPublicMessage-${message.id}">
                                 ✏️
                             </div>
