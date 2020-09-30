@@ -5,3 +5,7 @@
 .next-event h3 {
     font-size: 1.5em;
 }
+
+.no-display {
+    display: none;
+}

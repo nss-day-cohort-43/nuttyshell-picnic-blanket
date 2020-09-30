@@ -194,3 +194,29 @@ export const renderFriendArticles = (articleArray) => {
     //places article HTML list in content location
     articleFriendTarget.innerHTML = articleFriendListHTML
 }
+
+//eventHub for outside events
+const eventHub2 = document.querySelector(".container")
+
+//rerenders friend articles when add/delete
+eventHub2.addEventListener("friendStateChanged", event => {
+    // Friend State updated, refresh friends
+    getFriends() // fetch all of the current user's friends
+    .then(useFriends)
+    .then(() => {
+        const friends = useFriends()
+        if(friends.length !== 0){
+            //gets articles from your friends
+            getFriendArticles(friends)
+            .then(()=> {
+                const articles = useFriendArticles()
+                renderFriendArticles(articles)
+            })
+        }
+        //erases the remaining articles if you have no friends
+        else{
+            const articleFriendTarget = document.querySelector(".friend-articles-list")
+            articleFriendTarget.innerHTML = ""
+        }
+    })
+})

@@ -1,43 +1,81 @@
 import {getPublicMessages, usePublicMessages, savePublicMessage} from './MessageProvider.js'
-import {myMessageWriter, othersMessageWriter} from './Message.js'
+import {messageWriter} from './Message.js'
 import {getFriends, useFriends, getUsers, useUsers, saveFriend} from '../friends/FriendProvider.js'
 
 const eventHub = document.querySelector(".container")
 const userId = sessionStorage.getItem("activeUser");
 
-let friendsArray = [];
+let myFriendsArray = [];
 let allUsers = [];
 
 //Listen for the send message button to be clicked
 eventHub.addEventListener("click", event => {
     const isClicked = event.target.classList.value;
-    console.log("isClicked:", isClicked);
-    console.log("target.id: ", event.target.id);
     if (isClicked === "postPublicMessageBtn") {
+        // Retrieve the entered message from the message input
         const newMessage = document.querySelector("#newPublicMessage").value
-        //Create the obeject to be sent to the database
-        const message = {
-            private: false,
-            userId: parseInt(userId),
-            userReceive: null,
-            message: newMessage,
-            dateSent: Date(),
-            read: true
+        const userId = sessionStorage.getItem("activeUser")
+        // If the message doesnt start with @, it is safe to assume it is a public message
+        if (newMessage.startsWith("@") === false) {
+            //Create the obeject to be sent to the database
+            const message = {
+                private: false,
+                userId: parseInt(userId),
+                userReceive: null,
+                message: newMessage,
+                dateSent: Date.now(),
+                read: true
+            }
+            //Send the object to the database
+            savePublicMessage(message)
+        } 
+        else {
+            if (newMessage.startsWith("@") === true) {
+                // Seperate the first set of chars from the string, which will be @username
+                const [userFind, content] = newMessage.split(" ")
+                // Remove the leading @
+                const recipient = userFind.substring(1)
+                // Get users friends
+                getFriends()
+                .then(() => {
+                    // Create an array to work with
+                    const allFriends = useFriends()
+                    // Create an array for comparisons
+                    let friendsArray = []
+                    // Push usernames of friends to friends array for comparisons
+                    allFriends.map((friend) => {
+                        friendsArray.push(friend.user.username)
+                    })
+                    // Do this if "recipient" is a friend
+                    if (friendsArray.includes(recipient)) {
+                        //Retrieve the recipients entire object
+                        const receiver = allFriends.find((friend) => {
+                            return friend.user.username === recipient
+                        })
+                        //Create the obeject to be sent to the database
+                        const message = {
+                            private: true,
+                            userId: parseInt(userId),
+                            userReceive: receiver.userId,
+                            message: newMessage,
+                            dateSent: Date.now(),
+                            read: true
+                        }
+                        //Send the object to the database
+                        savePublicMessage(message)
+                    }
+                })  
+            }
         }
-        //Send the object to the database
-        savePublicMessage(message)
     }
-    // Listen for click to open dropdown menu for adding a user as a friend from public messages
+    // Listen for click of the button to add a user as a friend from public messages
     else if(event.target.id.startsWith("save-friend-from-message-btn")){
         const [prefix, id] = event.target.id.split("--"); // capture the id of the other username
-        console.log("prefix: ", prefix);
-        console.log("id: ", id);
-        console.log("allUsers: ", allUsers)
         //toggleRenderAddFriendDropdown(id);
         const userToFriend = allUsers.find(user => {
             return user.id == id
         }); 
-        console.log(userToFriend);
+        
         // find the user in the list of all users with the same ID as the id on the public message
 
         // create the friendship between active user and userToFriend
@@ -55,10 +93,11 @@ eventHub.addEventListener("click", event => {
 
         saveFriend(friendship_currentUserToOtherUser);     // save new friend
         saveFriend(friendship_otherUserToCurrentUser);     // save new friend
-        toggleRenderAddFriendDropdown(userToFriend.id)     // close addFriend form
+        removeAddButtons(userToFriend.id);
     
     }
 })
+
 
 //Create the section where public messages will be rendered
 export const publicMessagesStarter = () => {
@@ -80,7 +119,7 @@ export const publicMessagesStarter = () => {
     //Begin filling that section with individual messages
     getFriends() // fetch all of the current user's friends
     .then(() => {
-        friendsArray = useFriends();
+        myFriendsArray = useFriends();
         messagesRender();
     })
     .then(() => {
@@ -98,32 +137,31 @@ const fetchValidUsers = () => {
 }
 
 //Place each individual message into the box reserved for public messages
-const messagesRender = () => {
-    console.log("Rendering Messages");
-    // Fetch updated friends
-    //fetchFriends()
-    //fetchValidUsers()
-    //Fetch updated messages and then only continue when that step has completed
-    getPublicMessages()
-    .then(() => {
-        //Get an array of fetched messages to use
-        const messages = usePublicMessages()
-        //Set the destination for where individual messages should be rendered
-        const contentTarget = document.querySelector(".rendered-public-messages")
-        contentTarget.innerHTML = ""; // clear any leftover things.
-        //For each message in our array, write HTML using the data from it
-        const showMessages = messages.map((message) => {
-            //If message was created by logged in user, use this code which allows deleting
-            if (message.userId === parseInt(sessionStorage.getItem("activeUser"))) {
-                contentTarget.innerHTML += myMessageWriter(message)
-            }
-            //If message was NOT created by logged in user, use this code
-            else {
-                contentTarget.innerHTML += othersMessageWriter(message)
-            }
-        })
-        console.log("showMessages: ", showMessages);
+async function messagesRender() {
+    //Get an array of fetched messages to use
+    let messages = await getPublicMessages()
+    //Set the destination for where individual messages should be rendered
+    const contentTarget = document.querySelector(".rendered-public-messages")
+    //For each message in our array, write HTML using the data from it
+    const showMessages = async () => {
+        return Promise.all(messages.map(messageObj => messageWriter(messageObj)))
+    }
+    showMessages().then(result => {
+        
+        contentTarget.innerHTML = result.join("")
     })
+     // Target element where rendered messages are
+    const element = document.querySelector(".rendered-public-messages");
+    // Keep rendered messages window scrolled to the bottom
+    element.scrollTop = element.scrollHeight;
+}
+
+//fetches, renders, and reconnects every second to simulate real time chat
+export async function chatFeed() {
+    await getPublicMessages();
+    messagesRender()
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    await chatFeed();
 }
 
 
@@ -134,7 +172,7 @@ export const publicMessageUsername = (otherUser) => {
         return `
             <h5 class="public-message-username" id="normalUsername--${otherUser.id}">${otherUser.username}</h5>
             <div class="addNewFriendFromMessage">
-                <button type="button" class="addFriendBtn show" id="save-friend-from-message-btn--${otherUser.id}">+</button>
+                <button type="button" name="add-friend-btn-${otherUser.id}" class="addFriendBtn" id="save-friend-from-message-btn--${otherUser.id}">+</button>
             </div>
         `          
     }
@@ -146,34 +184,35 @@ export const publicMessageUsername = (otherUser) => {
 }
 
 export const isUserUnfamiliar = (targetUser) => {
-    console.log(targetUser);
-    if(!targetUser.id == userId){
+    if(targetUser.id != userId){
     // targetUser is the specifc username belonging to a public chat message
     // Is the username the same as any of active user's existing friends?
-        const isFriend = friendsArray.find(friend => friend.user.username === targetUser.username)
+        const isFriend = myFriendsArray.find(friend => friend.user.username === targetUser.username)
         if(!isFriend){
-            console.log("Message username is not a friend of active user");
+            //console.log("Message username is not a friend of active user");
             // If targetUser is not one of the active user's friends, return true
             return true;
         }
         else{
-            console.log("Message username is a friend of active user");
+            //console.log("Message username is a friend of active user");
             return false;
         }
     }
     else{
-        console.log("Message username is me, active user");
+        //console.log("Message username is me, active user");
         return false;
     }
 }
 
-// This function toggles between showing and hiding the dropdown each time the button is clicked
-const toggleRenderAddFriendDropdown = (otherUserId) => {
-    console.log("TOGGGGGGGLE");
-    console.log("otherUser: ", otherUserId);
-    const buttonTarget = document.getElementById(`save-friend-from-message-btn--${otherUserId}`);
-    console.log("buttonTarget: ", buttonTarget)
-    buttonTarget.classList.remove("show");
+// This function removes all the "add-friend-btn" buttons relating to a specific username
+// once the username has been added as a friend
+const removeAddButtons = (otherUserId) => {
+    let buttonTarget = document.getElementsByName(`add-friend-btn-${otherUserId}`);
+    // buttonTarget is an array of DOM elements, in this case a list of all the 
+    // messages made by a certain user
+    buttonTarget.forEach(btn => {
+        btn.setAttribute("style", "display: none;");
+    })
 }
 
 eventHub.addEventListener("friendStateChanged", event => {

@@ -1,13 +1,23 @@
 import { LoginForm } from "./auth/LoginForm.js"
 import { RegisterForm } from "./auth/RegisterForm.js"
 import { Nutshell } from "./Nutshell.js"
+import {LogoutBtn} from './auth/LogoutBtn.js'
 
 //listen for user authentication either from the LoginForm or RegistrationForm
 const eventHub = document.querySelector('.container')
+const eventHub2 = document.querySelector('.header')
 
 eventHub.addEventListener("userAuthenticated", event => {
     //run nuthsell if the user has been authenticated from either form
     Nutshell()
+})
+
+eventHub2.addEventListener("userLogout", event => {
+    console.log("User wants to log out!");
+    document.querySelector(".dashboard").innerHTML = ""; // clear dashboard
+    document.querySelector(".logout").innerHTML = ""; // clear logout button
+    sessionStorage.removeItem("activeUser"); // clear session storage
+    LoginForm(); // show login form
 })
 
 

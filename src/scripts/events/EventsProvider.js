@@ -1,4 +1,5 @@
 import defaultExport from "../Settings.js"
+import { getFriends, useFriends } from '../friends/FriendProvider.js'
 
 //variable that holds the events
 let events = []
@@ -6,6 +7,10 @@ let events = []
 let temp = 0
 //variable to hold current temp at an event location
 let currentTemp = 0
+//variable to store friends events
+let friendsEvents = []
+//variable that holds events with expanded users
+let expandedEvents = []
 
 //fetch events from the database using the current userId
 export const getEvents = () => {
@@ -97,4 +102,45 @@ export const useEventCurrentWeather = () => {
 //return the stored temp
 export const useEventWeather = () => {
     return temp
+}
+
+//edit a given event, update the events array, and dispatch custom event
+export const editEvent = (event) => {
+    return fetch(`http://localhost:8088/events/${event.id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(event)
+    })
+    .then(getEvents)
+    .then(dispatchEventChangeEvent)
+}
+
+//get array of current users friends events
+export const getFriendsEvents = () => {
+    //fetch events with expanded users
+    return fetch(`http://localhost:8088/events?_expand=user`)
+    .then(response => response.json())
+    .then(parsedResponse => {
+        expandedEvents = parsedResponse
+    })
+    //get the friends of the current user
+    .then(getFriends)
+    .then(_ => {
+        //get all the friends ids of the current user
+        const friendsIds = useFriends().map(friend => {
+            return friend.userId
+        })
+        //filter out events that do not belong to a friend
+        friendsEvents = expandedEvents.filter(event => {
+            return friendsIds.includes(event.userId)
+        })
+    })
+}
+
+
+//return copy of friendsEvents
+export const useFriendsEvents = () => {
+    return friendsEvents.slice()
 }

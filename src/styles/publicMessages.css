@@ -120,7 +120,8 @@
     font-size: 20px;
     padding: 0 5px;
     border: none;
-    
+    cursor: pointer;
+    height: 16px;
     color: rgb(46, 155, 250)
 
 }
@@ -130,13 +131,9 @@
     justify-content: flex-start;
 }
 
-/* .spacer {
-    flex: 10 10 50%;
-    background-color: red;
-} */
-
+/* 
 .show {
     display: block;
     margin: 0;
-}
+} */
 

@@ -7,6 +7,9 @@
 body {
     margin: 0;
     padding: 0;
+    background-color: rgb(249, 198, 137);
+    display: flex;
+    flex-direction: column;
 }
 
 .hidden { 
@@ -16,15 +19,23 @@ body {
 
 /* ---------------- Header ------------------- */
 header {
+    display: flex;
     margin: 0;
     height: 100px;
-    background: gray;
+    background: rgb(201, 85, 35);
     width: 100%;
     padding: 10px;
 }
 
 .title {
-    margin: 0;
+    margin: auto 0 auto 0;
+    justify-content: flex-start;
+}
+
+.logout {
+    justify-content: flex-end;
+    margin: 10px 10px 10px auto;
+    width: 70px;
 }
 
 
@@ -33,7 +44,9 @@ header {
 
 
 .container {
-    background-color: white;
+    margin-top: auto;
+    margin-bottom: auto;
+    /* background-color: rgb(249, 198, 137); */
     /* make this a gradient or a picture? */
 }
 
@@ -126,9 +139,9 @@ header {
 /* ------------------ Footer --------------------- */
 
 footer {
-    margin: 0;
+    margin: auto 0 0 0;
     height: 100px;
-    background: gray;
+    background: rgb(201, 85, 35);
     width: 100%;
     padding: 10px;
 }
