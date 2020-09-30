@@ -15,10 +15,7 @@ const render = () => {
         const contentElement = document.querySelector('.events-list')
         //call Event() for each event object to create the html
         contentElement.innerHTML = `
-<<<<<<< HEAD
-=======
             
->>>>>>> master
             ${events.map(event => {
                 return Event(event)
             }).sort().join("")}
@@ -38,18 +35,11 @@ export const EventList = () => {
     //set up html elements for rendering
     dashboard.innerHTML += `
         <div class="events-container">
-<<<<<<< HEAD
             <h2>My Events</h2>
             <button type="button" id="event-form-display-button">Add new event</button>
             <form class="events-form">
             </form>
             <div class="events-list">
-=======
-            <div class="myEvents">
-                <h2>Your Events</h2>
-                <form class="events-form"></form>
-                <div class="events-list"></div>
->>>>>>> master
             </div>
             <div class="friends-events-list">
             </div>

@@ -30,7 +30,6 @@ export const EventWeather = (events) => {
                 const eventWeather = document.getElementById(`event-weather-${event.id}`)
                 //display a differnt message depending if the event is today or not
                 if(eventDate === currentDateDays){
-                    debugger;
                     eventWeather.innerHTML = `Current Weather:<br>${weather}<br>${temp}&#730;F`
                 }
                 else{
