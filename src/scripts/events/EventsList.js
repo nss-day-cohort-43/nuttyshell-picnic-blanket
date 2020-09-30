@@ -69,16 +69,8 @@ eventHub.addEventListener('friendStateChanged', event => {
 eventHub.addEventListener('click', event => {
     //check that the event form button was clicked
     if(event.target.id === "event-form-display-button"){
-        //if the event form is currently not rendered, render it and update the button html
-        const eventForm = document.querySelector('.events-form')
-        if(event.target.innerHTML === "Add new event"){
-            EventForm()
-            event.target.innerHTML = "Hide Event Form"
-        }
-        //else, set the html of the event form to blank and update the button html
-        else{
-            eventForm.innerHTML = ""
-            event.target.innerHTML = "Add new event"
-        }
+        //render the event form and hide the display form button
+        EventForm()
+        event.target.classList.add('no-display')
     }
 })
