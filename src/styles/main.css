@@ -7,6 +7,12 @@
 body {
     margin: 0;
     padding: 0;
+    font-family: 'Yantramanav', sans-serif;
+    background:cornsilk;
+}
+
+button {
+    font-family: inherit
 }
 
 .hidden { 
@@ -18,22 +24,39 @@ body {
 header {
     margin: 0;
     height: 100px;
-    background: gray;
+    background: rgb(161, 127, 150);
     width: 100%;
-    padding: 10px;
+    padding-bottom: 1px;
+    display:flex;
+    flex-direction: row;
+    
 }
 
 .title {
     margin: 0;
+    align-self: center;
 }
 
+.logo-and-title {
+    display:flex;
+    flex-direction: row;
+}
+
+.currentWeather {
+    padding-right: 2em;
+}
+
+.logo {
+    height: 90px;
+    width: auto;
+}
 
 
 /* ----------------- Main body content ----------------- */
 
 
 .container {
-    background-color: white;
+    background-color: cornsilk;
     /* make this a gradient or a picture? */
 }
 
@@ -51,6 +74,8 @@ header {
     width: 15em;
     height: 15em;
     justify-content: center;
+    background-color: rgb(234, 131, 121);
+
 
 }
 
@@ -58,9 +83,9 @@ header {
 .auth--login {
     display: flex;
     flex-direction: column;
-    background-color: rgb(230, 230, 230);
     padding: 10px 20px;
     width: 100%;
+    background-color: rgb(234, 131, 121);
 
 }
 
@@ -77,15 +102,13 @@ header {
 #login--btn {
     margin: auto 5px;
     font-size: 20px;
-    background-color: rgb(167, 167, 167);
+    background-color: rgb(236, 208, 153);
 }
 
 #create-new-account-btn {
-    color: white;
-    border-color: rgb(80, 177, 96);
     margin: auto 5px;
     font-size: 20px;
-    background-color: rgb(80, 177, 96);
+    background-color: rgb(154, 185, 136);
 }
 
 
@@ -98,7 +121,7 @@ header {
 .auth--register {
     display: flex;
     flex-direction: column;
-    background-color: rgb(230, 230, 230);
+    background-color: rgb(234, 131, 121);
     padding: 10px 20px;
     width: 100%;
 }
@@ -106,7 +129,7 @@ header {
 #register--btn {
     margin: auto 5px;
     font-size: 20px;
-    background-color: rgb(80, 177, 96);
+    background-color: rgb(154, 185, 136);
 }
 
 .register {
@@ -116,12 +139,122 @@ header {
 
 
  /* --------------------- Actual user content ------------------ */
+ .articles{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto;
+    grid-area: articles;
+    background-color: rgb(236, 208, 153);
+    border: 5px solid cornsilk;
+} 
+
+.tasks {
+    
+    grid-area: tasks;
+    background-color: rgb(187, 197, 152);
+    border: 5px solid cornsilk;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.weather{
+    grid-area: weather;
+    
+    padding-right: 5px;
+    padding-left: 5px;
+    padding-bottom: 10px;
+    background-color: rgb(240, 175, 130);
+    border: 5px solid cornsilk;
+}
+
+.public-messages {
+    grid-area: chat;
+    background-color: rgb(240, 175, 130);
+    border: 5px solid cornsilk;
+
+}
+
+#myFriends {
+    grid-area: friends;
+    background-color: rgb(168, 117, 117);
+    border: 5px solid cornsilk;
+}
+
+.events-container {
+    display: grid;
+    grid-area: events;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto;
+    background-color: rgb(236, 208, 153);
+    border: 5px solid cornsilk;
+    
+}
+
+.friends-events-list {
+    
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    border-left: 5px solid cornsilk;
+    max-height: 400px;
+    overflow-y:auto;
+}
+
+.myEvents {
+    
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    border-right: 5px solid cornsilk;
+    max-height: 400px;
+    overflow-y:auto;
+}
+
 .dashboard { 
     background-color: dimgray;
-    width: 50%;
-    height: 50%;
     margin: 10px 0;
+    display: grid;
+    grid-template-columns: 12% 35% 35% 18%;
+    grid-template-rows: auto;
+    grid-template-areas: 
+    "weather events events friends"
+    
+    
+    "tasks articles articles friends"
+    "tasks chat chat friends"
+    "tasks chat chat friends";
 }
+
+
+
+.myArticleContainer{
+    
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    border-right: 5px solid cornsilk;
+    height: 400px;
+    overflow-y:auto;
+}
+
+.friend-articles-list{
+    
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    border-left: 5px solid cornsilk;
+    height: 400px;
+    overflow-y:auto;
+}
+
+h2 {
+    border-block-end: 1px solid;
+}
+
+.weatherHeader {
+    border-block-end: 1px solid;
+}
+
 
 /* ------------------ Footer --------------------- */
 
@@ -130,5 +263,27 @@ footer {
     height: 100px;
     background: gray;
     width: 100%;
-    padding: 10px;
+    padding-top: 10px;
+    background: rgb(161, 127, 150);
+    
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgb(155, 138, 118);
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }

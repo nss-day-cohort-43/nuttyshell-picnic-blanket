@@ -17,6 +17,8 @@ eventHub.addEventListener("userAuthenticated", event => {
 const activeUser = sessionStorage.getItem("activeUser")
 
 if(activeUser){
+    const contentTarget = document.querySelector(".auth")
+    contentTarget.setAttribute("style", "display: none;")
     Nutshell();
 }
 else{

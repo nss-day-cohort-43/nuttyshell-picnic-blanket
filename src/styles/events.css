@@ -1,5 +1,8 @@
 .next-event {
-    background-color: darkgray;
+    background-color: rgb(253, 235, 196);
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
 }
 
 .next-event h3 {

@@ -12,7 +12,7 @@ export const renderFriendsInitial = () => {
     const friendsContentTarget = document.querySelector(".dashboard")
     friendsContentTarget.innerHTML += `
         <section id="myFriends">
-            <h1 class="myFriendsTitle">Friends</h1>
+            <h2 class="myFriendsTitle">Friends</h2>
             <div id="addFriend">
                 <button type="button" id="addNewFriend-btn">Add a Friend</button>
                 <div id="addFriendByUsername"></div>

@@ -1,4 +1,4 @@
-import {publicMessagesStarter} from './MessageBox.js'
+import {publicMessagesStarter, messagesRender} from './MessageBox.js'
 
 // Store Fetched Messages
 let publicMessages = []
@@ -20,6 +20,7 @@ export const getPublicMessages = () => {
 
 // Insert new messages into the database
 export const savePublicMessage = message => {
+    // debugger
     return fetch("http://localhost:8088/messages", {
         method: "POST",
         headers: {
@@ -28,9 +29,7 @@ export const savePublicMessage = message => {
         body: JSON.stringify(message)
     })
     //Wait for the database to update and then render everything again with newest data
-    .then(() => {
-        publicMessagesStarter()
-    })
+    .then(messagesRender)
 }
 
 // Delete a previously created public message
@@ -39,10 +38,8 @@ export const deletePublicMessage = messageID => {
         method: "DELETE"
     })
     //Wait for the database to update and then render everything again with newest data
-    .then(() => {
-        publicMessagesStarter()})
-
-    }
+    .then(messagesRender)
+}
 
 // Edit a previously created public message in the api
 export const editPublicMessage = message => {
@@ -54,5 +51,5 @@ export const editPublicMessage = message => {
         body: JSON.stringify(message)
       })
       // Then render the updated messages
-      .then(publicMessagesStarter)
+      .then(messagesRender)
     }
