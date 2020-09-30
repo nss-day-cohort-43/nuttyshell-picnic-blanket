@@ -85,7 +85,6 @@ export const getEventWeather = (event) => {
             const noonForecast = viableForecasts.find(forecast => {
                 return forecast.dt_txt.includes("12:00:00")
             })
-
             weather = noonForecast.weather[0].description
         }
         //if there are no forecasts for the event date, set temp to 0

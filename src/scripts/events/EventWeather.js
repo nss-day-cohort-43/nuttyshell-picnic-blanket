@@ -9,7 +9,7 @@ export const EventWeather = (events) => {
         const currentDate = new Date()
         const currentDateDays = Math.floor(currentDate.getTime()/ (1000*60*60*24))
         //check that the event date is within 5 days of the current date and not in the past
-        if(eventDate - currentDateDays <= 5 && eventDate - currentDateDays >= 0){
+        if(eventDate - currentDateDays <= 5 && eventDate - currentDateDays >= 1){
             //if the event is within 5 days, get the temperature for that day
             getEventWeather(event)
             .then(_ => {
@@ -28,7 +28,14 @@ export const EventWeather = (events) => {
                 const weather = useEventCurrentWeather()
                 const temp = useEventCurrentTemp()
                 const eventWeather = document.getElementById(`event-weather-${event.id}`)
-                eventWeather.innerHTML = `Can only display current weather<br>${weather}<br>${temp}&#730;F`
+                //display a differnt message depending if the event is today or not
+                if(eventDate === currentDateDays){
+                    debugger;
+                    eventWeather.innerHTML = `Current Weather:<br>${weather}<br>${temp}&#730;F`
+                }
+                else{
+                    eventWeather.innerHTML = `Can only display current weather<br>${weather}<br>${temp}&#730;F`
+                }
             })
         }
     })
