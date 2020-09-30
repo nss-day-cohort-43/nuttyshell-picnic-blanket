@@ -1,5 +1,5 @@
 import {deletePublicMessage, editPublicMessage, usePublicMessages} from './MessageProvider.js'
-import {publicMessagesStarter, publicMessageUsername, isUserUnfamiliar} from './MessageBox.js' 
+import {publicMessagesStarter, publicMessageUsername, isUserUnfamiliar, messagesRender} from './MessageBox.js' 
 // import { getFriends, useFriends } from '../friends/FriendProvider.js'
 
 
@@ -53,10 +53,12 @@ eventHub.addEventListener("click", event => {
             if (isClicked === "editMessageSave"){
                 const [prefix, messageID] = event.target.id.split("-")
                 editBuilder(messageID)
+                document.querySelector(".composePublicMessage-edit").innerHTML = ""
             }
             else {
                 if (isClicked === "editCancel") {
-                    publicMessagesStarter()
+                    document.querySelector(".composePublicMessage-edit").innerHTML = ""
+                    messagesRender()
                 }
             }
         }
@@ -152,7 +154,7 @@ export async function messageWriter (message) {
                             <div class="message-top">                  
                                 ${publicMessageUsername(message.user)} 
                             </div>
-                            <p class="public-message-content"> ${message.message}</p>
+                            <p class="public-message-content">  🤫 ${message.message}</p>
                         </div>
                     </div>`
         }
@@ -171,7 +173,7 @@ export async function messageWriter (message) {
                                     </div>
                                 </div>
                             </div>
-                            <div class="public-message-content" id="public-message-content-${message.id}">${message.message}</div>
+                            <div class="public-message-content" id="public-message-content-${message.id}"> 🤫 ${message.message}</div>
                             
                         </div>`
             }

@@ -12,7 +12,7 @@ export const FriendEventsList = () => {
         const contentTarget = document.querySelector('.friends-events-list')
         //for each event, create the HTML for that event using FriendEvent()
         contentTarget.innerHTML = `
-            <h3>Friends Events</h3>
+            <h2>Friends Events</h2>
             ${friendsEvents.map(event => {
                 return FriendEvent(event)
             }).sort().join("")}

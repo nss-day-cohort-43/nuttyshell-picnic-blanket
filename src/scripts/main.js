@@ -13,7 +13,6 @@ eventHub.addEventListener("userAuthenticated", event => {
 })
 
 eventHub2.addEventListener("userLogout", event => {
-    console.log("User wants to log out!");
     document.querySelector(".dashboard").innerHTML = ""; // clear dashboard
     document.querySelector(".logout").innerHTML = ""; // clear logout button
     sessionStorage.removeItem("activeUser"); // clear session storage
@@ -27,9 +26,17 @@ eventHub2.addEventListener("userLogout", event => {
 const activeUser = sessionStorage.getItem("activeUser")
 
 if(activeUser){
+    console.log("Dashboard show");
+    const a = document.querySelector(".auth");
+    console.log("a: ", a);
+    
+    a.innerHTML = ""; // clear auth section
+    a.setAttribute("style", "display: none;");
+    a.innerHTML = "";
     Nutshell();
 }
 else{
+    document.querySelector(".auth").innerHTML = "";
     LoginForm();
 }
 

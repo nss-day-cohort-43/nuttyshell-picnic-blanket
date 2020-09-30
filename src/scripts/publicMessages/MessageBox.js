@@ -28,6 +28,7 @@ eventHub.addEventListener("click", event => {
             }
             //Send the object to the database
             savePublicMessage(message)
+            .then(document.querySelector("#newPublicMessage").value = "")
         } 
         else {
             if (newMessage.startsWith("@") === true) {
@@ -101,6 +102,7 @@ eventHub.addEventListener("click", event => {
 
 //Create the section where public messages will be rendered
 export const publicMessagesStarter = () => {
+    // debugger
     //Set the destination where this section will be rendered
     document.querySelector(".dashboard").innerHTML += `<div class="public-messages"></div>`
     const contentTarget = document.querySelector(".public-messages")
@@ -137,7 +139,7 @@ const fetchValidUsers = () => {
 }
 
 //Place each individual message into the box reserved for public messages
-async function messagesRender() {
+export async function messagesRender() {
     //Get an array of fetched messages to use
     let messages = await getPublicMessages()
     //Set the destination for where individual messages should be rendered

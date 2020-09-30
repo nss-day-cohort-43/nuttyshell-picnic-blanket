@@ -12,7 +12,7 @@ export const Nutshell = () => {
     LogoutBtn()
 
     //render the event list
-    EventList()
+    
     //like renderTasks, renderArticles, renderEvents, etc
     //import render for all components here
     renderFriendsInitial()
@@ -20,5 +20,6 @@ export const Nutshell = () => {
     publicMessagesStarter()
     renderTasksInitial()
     renderArticlesInitial()
-    //chatFeed()
+    EventList();
+    chatFeed()
 }

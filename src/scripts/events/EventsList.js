@@ -15,7 +15,7 @@ const render = () => {
         const contentElement = document.querySelector('.events-list')
         //call Event() for each event object to create the html
         contentElement.innerHTML = `
-            <h2>Events</h2>
+            
             ${events.map(event => {
                 return Event(event)
             }).sort().join("")}
@@ -32,14 +32,13 @@ const render = () => {
 
 //render initial list of events when Nutshell runs
 export const EventList = () => {
-
     //set up html elements for rendering
     dashboard.innerHTML += `
         <div class="events-container">
-            <h3>New Event</h3>
-            <form class="events-form">
-            </form>
-            <div class="events-list">
+            <div class="myEvents">
+                <h2>Your Events</h2>
+                <form class="events-form"></form>
+                <div class="events-list"></div>
             </div>
             <div class="friends-events-list">
             </div>

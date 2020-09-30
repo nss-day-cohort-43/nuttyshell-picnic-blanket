@@ -1,11 +1,8 @@
 
 #myFriends {
-    display: flex;
-    flex-direction: column;
-    min-width: 265px;
-    max-width: 300px;
-    background-color: whitesmoke;
-    border: black solid 2px;
+    grid-area: friends;
+    background-color: rgb(168, 117, 117);
+    border: 5px solid cornsilk;
     padding: 10px;
 }
 
@@ -16,11 +13,6 @@
 #addNewFriend-btn {
     width: 100%;
     text-align: center;
-}
-
-.myFriendsTitle {
-    font-size: 2em;
-    margin: 5px auto;
 }
 
 .friendList-item { 
